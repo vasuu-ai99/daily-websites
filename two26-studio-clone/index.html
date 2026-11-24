@@ -65,8 +65,10 @@ header>*{pointer-events:auto}
 .hscroll-viewport{overflow:hidden;padding:10px 0 30px}
 .hscroll-track{display:flex;gap:20px;padding:0 22px;width:max-content;transition:transform .1s linear}
 .card{width:min(78vw,380px);flex-shrink:0;background:#fff;border-radius:22px;overflow:hidden;border:1px solid rgba(0,0,0,.06)}
-.card-img{height:380px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.card-img b{font-family:Anton,sans-serif;font-size:28px;text-align:center;line-height:.9;padding:20px}
+.card-img{height:380px;position:relative;overflow:hidden;background:#111}
+.card-img img{width:100%;height:100%;object-fit:cover;display:block}
+.card-img .card-tag{position:absolute;left:14px;bottom:14px;background:#111;color:#fff;font-family:Anton,sans-serif;font-size:20px;letter-spacing:.03em;padding:8px 14px;border-radius:999px;line-height:1;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.card-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 62%,rgba(0,0,0,.28));pointer-events:none}
 .card-body{padding:16px;display:flex;justify-content:space-between;align-items:flex-end}
 .card-body h3{margin:0;font-family:Anton,sans-serif;font-size:26px}
 .card-body p{margin:4px 0 0;color:var(--orange);font-size:11px;letter-spacing:.14em;font-weight:800}
@@ -162,8 +164,8 @@ header{animation:headIn .8s var(--ease) .9s both}
 .hscroll-track{transition:none;will-change:transform}
 .card{transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
 .card:hover{transform:translateY(-10px) rotate(-1deg);box-shadow:0 24px 44px rgba(0,0,0,.14)}
-.card .card-img>div{transition:transform .5s var(--ease)}
-.card:hover .card-img>div{transform:scale(1.08) rotate(-2deg)}
+.card .card-img img{transition:transform .6s var(--ease)}
+.card:hover .card-img img{transform:scale(1.07) rotate(-1deg)}
 .card:hover .arrow{transform:rotate(45deg)}
 .arrow{transition:transform .35s var(--ease)}
 .progress{overflow:visible}
@@ -187,8 +189,11 @@ header{animation:headIn .8s var(--ease) .9s both}
 .testi-outer{height:460vh}
 .testi-pin{position:sticky;top:0;height:100vh;height:100svh;padding:14px;display:flex}
 .testi{height:100%;display:flex;flex-direction:column;justify-content:center}
-.testi .stack{height:min(600px,56vh);width:100%}
-.testi .tcard{transition:none;overflow-y:auto}
+.testi .stack{height:min(620px,60vh);width:100%}
+.testi .tcard{transition:none;overflow:hidden}
+.tcard-in{height:100%;display:flex;flex-direction:column}
+.tcard p{overflow:hidden}
+@media(max-width:700px){.testi .tcard{padding:20px}.testi .tcard h4{font-size:17px}.testi .tcard p{font-size:13.5px;line-height:1.5}}
 .testi .ticks{z-index:40}
 .tnav button{transition:transform .25s var(--ease)}
 .tnav button:hover{transform:translateY(-2px) scale(1.04)}
@@ -231,7 +236,7 @@ footer a:hover{transform:translateX(6px);opacity:1}
 @keyframes viewIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 /* vasux badge pulse dot */
 .vasux span{animation:pulse 1.2s ease-in-out infinite alternate}
-@media(max-width:700px){.works-outer{height:320vh}.works-pin{justify-content:flex-start;padding-top:84px}.testi-outer{height:420vh}.testi-pin{padding:10px}.testi{padding:30px 16px 40px}.testi .stack{height:54vh}}
+@media(max-width:700px){.works-outer{height:320vh}.works-pin{justify-content:flex-start;padding-top:84px}.testi-outer{height:420vh}.testi-pin{padding:10px}.testi{padding:30px 16px 40px}.testi .stack{height:64vh}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}.works-outer{height:auto}.works-pin{position:static;height:auto}.hscroll-viewport{overflow-x:auto!important}.testi-outer{height:auto}.testi-pin{position:static;height:auto;padding:14px 0}.testi{height:auto}}
 </style>
 </head>
@@ -252,10 +257,10 @@ footer a:hover{transform:translateX(6px);opacity:1}
     <div class="black-pill bp1">Independent studio</div><div class="black-pill bp2">Branding &amp; design</div><div class="black-pill bp3">No funny business</div>
     <h1><span class="line"><span class="inner">LOOKING</span></span><span class="line"><span class="inner">SUSPICIOUSLY</span></span><span class="line"><span class="inner">GOOD</span></span></h1>
     <div class="illustration">
-      <div style="position:absolute;left:5%;bottom:26px;font-size:54px;transform:rotate(-6deg)">🐱</div>
-      <div style="position:absolute;left:28%;bottom:0;width:170px;height:290px;background:#FF4D00;border-radius:20px 20px 0 0;display:flex;flex-direction:column;align-items:center;padding-top:18px;color:#fff"><div style="width:56px;height:56px;background:#FFD9B8;border-radius:50%;border:3px solid #111;display:grid;place-items:center;font-size:22px">🕶️</div><div class="board" style="width:110px;height:90px;margin-top:18px;font-size:28px">TWO</div><div style="margin-top:12px;display:flex;gap:18px"><span style="width:14px;height:70px;background:#FFE9D6;display:block;transform:rotate(6deg)"></span><span style="width:14px;height:70px;background:#fff;display:block"></span></div></div>
+      <div style="position:absolute;left:5%;bottom:26px;transform:rotate(-6deg)"><svg viewBox="0 0 120 100" width="72" height="60" aria-hidden="true"><path d="M22 34 L16 6 L44 20 Q60 12 76 20 L104 6 L98 34 Q108 48 102 66 Q92 92 60 92 Q28 92 18 66 Q12 48 22 34Z" fill="#FF4D00" stroke="#111" stroke-width="4" stroke-linejoin="round"/><circle cx="42" cy="56" r="5" fill="#111"/><circle cx="78" cy="56" r="5" fill="#111"/><path d="M54 68 Q60 74 66 68" fill="none" stroke="#111" stroke-width="4" stroke-linecap="round"/><path d="M6 58 H28 M10 72 L30 66 M114 58 H92 M110 72 L90 66" stroke="#111" stroke-width="3" stroke-linecap="round"/></svg></div>
+      <div style="position:absolute;left:28%;bottom:0;width:170px;height:290px;background:#FF4D00;border-radius:20px 20px 0 0;display:flex;flex-direction:column;align-items:center;padding-top:18px;color:#fff"><div style="width:56px;height:56px;background:#FFD9B8;border-radius:50%;border:3px solid #111;display:grid;place-items:center"><svg viewBox="0 0 60 26" width="38" aria-hidden="true"><path d="M3 5 H27 V14 Q27 22 20 22 H10 Q3 22 3 14Z M33 5 H57 V14 Q57 22 50 22 H40 Q33 22 33 14Z" fill="#111"/><path d="M27 9 Q30 6 33 9" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div><div class="board" style="width:110px;height:90px;margin-top:18px;font-size:28px">TWO</div><div style="margin-top:12px;display:flex;gap:18px"><span style="width:14px;height:70px;background:#FFE9D6;display:block;transform:rotate(6deg)"></span><span style="width:14px;height:70px;background:#fff;display:block"></span></div></div>
       <div style="position:absolute;right:24%;bottom:0;width:170px;height:280px;background:#fff;border:2px solid #111;border-radius:20px 20px 0 0;display:flex;flex-direction:column;align-items:center;padding-top:16px"><div style="width:56px;height:56px;background:#2B1A12;border-radius:50%;border:3px solid #111"></div><div class="board" style="width:110px;height:90px;margin-top:16px;font-size:32px;background:#FFE9D6">26</div><div style="margin-top:10px;width:90px;height:54px;background:#FF4D00;border-radius:0 0 14px 14px"></div></div>
-      <div style="position:absolute;right:4%;bottom:22px;font-size:52px;transform:rotate(4deg)">🐈‍⬛</div>
+      <div style="position:absolute;right:4%;bottom:22px;transform:rotate(4deg)"><svg viewBox="0 0 120 100" width="68" height="57" aria-hidden="true"><path d="M22 34 L16 6 L44 20 Q60 12 76 20 L104 6 L98 34 Q108 48 102 66 Q92 92 60 92 Q28 92 18 66 Q12 48 22 34Z" fill="#111" stroke="#111" stroke-width="4" stroke-linejoin="round"/><circle cx="42" cy="56" r="5" fill="#FFD9B8"/><circle cx="78" cy="56" r="5" fill="#FFD9B8"/><path d="M54 68 Q60 74 66 68" fill="none" stroke="#FFD9B8" stroke-width="4" stroke-linecap="round"/><path d="M6 58 H28 M10 72 L30 66 M114 58 H92 M110 72 L90 66" stroke="#111" stroke-width="3" stroke-linecap="round"/></svg></div>
     </div>
   </section>
 
@@ -300,7 +305,7 @@ footer a:hover{transform:translateX(6px);opacity:1}
   <section class="section">
     <div class="label orange">FREQUENTLY ASKED QUESTIONS</div><h2 style="font-size:clamp(48px,8vw,96px);margin:8px 0">THINGS YOU<br>MIGHT ASK</h2>
     <div class="faq-grid">
-      <div><div style="background:#fff;border-radius:20px;padding:22px;text-align:center;border:2px solid #111"><div style="font-weight:800;letter-spacing:.2em">ZZZZ</div><div class="faq-cat" style="font-size:92px;line-height:1.1">🐱</div><div style="width:54px;height:54px;background:var(--orange);color:#fff;border-radius:50%;display:grid;place-items:center;margin:12px auto;font-size:26px;box-shadow:4px 4px 0 #111">↓</div></div></div>
+      <div><div style="background:#fff;border-radius:20px;padding:22px;text-align:center;border:2px solid #111"><div style="font-weight:800;letter-spacing:.2em">ZZZZ</div><div class="faq-cat" style="line-height:1.1;padding:8px 0"><svg viewBox="0 0 120 100" width="110" height="92" aria-hidden="true"><path d="M22 34 L16 6 L44 20 Q60 12 76 20 L104 6 L98 34 Q108 48 102 66 Q92 92 60 92 Q28 92 18 66 Q12 48 22 34Z" fill="#FF4D00" stroke="#111" stroke-width="4" stroke-linejoin="round"/><circle cx="42" cy="56" r="5" fill="#fff"/><circle cx="78" cy="56" r="5" fill="#fff"/><path d="M54 68 Q60 74 66 68" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M6 58 H28 M10 72 L30 66 M114 58 H92 M110 72 L90 66" stroke="#111" stroke-width="3" stroke-linecap="round"/></svg></div><div style="width:54px;height:54px;background:var(--orange);color:#fff;border-radius:50%;display:grid;place-items:center;margin:12px auto;font-size:26px;box-shadow:4px 4px 0 #111">↓</div></div></div>
       <div id="faqList"></div>
     </div>
   </section>
@@ -308,7 +313,7 @@ footer a:hover{transform:translateX(6px);opacity:1}
 
 <!-- WORK VIEW -->
 <div id="view-work" class="view">
-  <div class="page-hero"><div class="black-pill" style="position:relative;display:inline-block;transform:rotate(-3deg)">Just a few</div> <div class="black-pill" style="position:relative;display:inline-block;transform:rotate(2deg);margin-left:8px">Kind of proud</div><h1>A FEW PROJECTS<br>TO BRAG ABOUT</h1><p style="color:var(--orange);font-weight:600;font-size:18px;line-height:1.5;max-width:560px;margin-left:auto">A selection of brands, identities, websites and other things we've helped bring to life. Different clients, different challenges, same obsession with making things look good and work even better.</p><div style="font-size:56px">📦🐱</div></div>
+  <div class="page-hero"><div class="black-pill" style="position:relative;display:inline-block;transform:rotate(-3deg)">Just a few</div> <div class="black-pill" style="position:relative;display:inline-block;transform:rotate(2deg);margin-left:8px">Kind of proud</div><h1>A FEW PROJECTS<br>TO BRAG ABOUT</h1><p style="color:var(--orange);font-weight:600;font-size:18px;line-height:1.5;max-width:560px;margin-left:auto">A selection of brands, identities, websites and other things we've helped bring to life. Different clients, different challenges, same obsession with making things look good and work even better.</p><div style="display:flex;gap:14px;align-items:flex-end;margin-top:6px"><svg viewBox="0 0 100 100" width="58" height="58" aria-hidden="true"><path d="M50 8 L90 28 V72 L50 92 L10 72 V28Z" fill="#FF4D00" stroke="#111" stroke-width="4" stroke-linejoin="round"/><path d="M10 28 L50 48 L90 28 M50 48 V92" fill="none" stroke="#111" stroke-width="4" stroke-linejoin="round"/><path d="M32 18 L72 38" stroke="#111" stroke-width="4"/></svg><svg viewBox="0 0 120 100" width="66" height="55" aria-hidden="true"><path d="M22 34 L16 6 L44 20 Q60 12 76 20 L104 6 L98 34 Q108 48 102 66 Q92 92 60 92 Q28 92 18 66 Q12 48 22 34Z" fill="#111" stroke="#111" stroke-width="4" stroke-linejoin="round"/><circle cx="42" cy="56" r="5" fill="#FFD9B8"/><circle cx="78" cy="56" r="5" fill="#FFD9B8"/><path d="M54 68 Q60 74 66 68" fill="none" stroke="#FFD9B8" stroke-width="4" stroke-linecap="round"/></svg></div></div>
   <div class="grid3" id="workGrid"></div>
 </div>
 
@@ -329,7 +334,7 @@ footer a:hover{transform:translateX(6px);opacity:1}
 <!-- PROJECT DETAIL -->
 <div id="view-project" class="view">
   <div style="padding:96px 18px 0;max-width:1100px;margin:0 auto"><button class="pill-nav" onclick="showView('work')">‹ Back to our work</button> <button class="btn-talk" onclick="openOverlay()" style="float:right">Let's Talk <i>↗</i></button></div>
-  <div style="background:#A8E6D8;margin:18px;border-radius:24px;padding:28px;position:relative;overflow:hidden;min-height:340px"><div style="font-size:96px">🐉</div><h1 style="font-size:clamp(56px,10vw,110px);color:#FFF8EE;margin:10px 0 0;text-shadow:2px 2px 0 rgba(0,0,0,.1)">HEYGLUCO</h1><p style="font-weight:700">Health &amp; Wellness</p></div>
+  <div style="background:#A8E6D8;margin:18px;border-radius:24px;padding:28px;position:relative;overflow:hidden;min-height:340px"><img src="assets/heygluco.jpg" alt="Gluco, the friendly green dragon mascot created for HeyGluco" style="width:190px;height:190px;object-fit:cover;border-radius:22px;border:3px solid #111;display:block"/><h1 style="font-size:clamp(56px,10vw,110px);color:#FFF8EE;margin:10px 0 0;text-shadow:2px 2px 0 rgba(0,0,0,.1)">HEYGLUCO</h1><p style="font-weight:700">Health &amp; Wellness</p></div>
   <section class="section" style="padding-top:10px"><h3 class="cond" style="font-size:28px">The Context</h3><p style="line-height:1.7">HeyGluco was born from a family's own experience with type 1 diabetes. After their daughter Ecaterina was diagnosed at seven, they found themselves navigating a new reality filled with medical information, calculations, uncertainty and a lot of fear. What they needed most in those first months wasn't more information, but a clearer, more human way to make sense of it. They decided to create the resource they wished they had from day one: a place where families could learn, find practical tools and feel supported by people who had already been through the same experience. Our challenge was to turn that deeply personal idea into a brand that could talk about a serious subject with clarity and empathy, without feeling clinical or intimidating. Project year - 2026</p><h3 class="cond" style="font-size:28px;margin-top:24px">The Solution</h3><p style="line-height:1.7">We built HeyGluco around the idea of making diabetes easier to understand and less frightening, especially for children. At the centre of the identity is Gluco, a small dragon designed as a familiar companion through a world of sensors, insulin, glucose levels and new routines. Every detail has a purpose. His three coloured spikes reference glucose levels, while the scarf is inspired by the international symbol of diabetes. Around him, we created a cast of characters based on everyday diabetes tools, turning unfamiliar medical objects into something children can recognise and relate to. A second, more narrative illustration style helps tell the family's real story with more emotion and nuance. A warm, colourful palette moves away from the cold visual codes of healthcare, while typography and a clear editorial system make complex information easier to navigate. Together, they give HeyGluco a visual language that can educate without overwhelming and support without talking down.</p><div class="chips"><span class="chip">Illustration</span><span class="chip">Brand Strategy</span><span class="chip">Animation</span><span class="chip">Visual Identity</span></div></section>
 </div>
 
@@ -340,22 +345,22 @@ footer a:hover{transform:translateX(6px);opacity:1}
   <div class="giant">TWO26</div>
 </footer>
 
-<div id="overlay"><div style="display:flex;justify-content:space-between;align-items:center"><div style="font-family:Anton,sans-serif;font-size:28px">TWO 26</div><button onclick="closeOverlay()" style="background:#FFF6EC;border:none;border-radius:999px;padding:10px 18px;font-weight:800">Close ×</button></div><h2><span>WANT TO</span><span>START</span><span>A NEW</span><span>PROJECT?</span></h2><p style="color:#FFD9B8;font-size:20px;font-weight:600">or just say hello!</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:700px;margin-top:30px"><div><div class="label" style="color:#FFD9B8">INQUIRIES &amp; COMMISSIONS</div><a href="mailto:bogdan@two26.studio" style="font-size:20px;font-weight:800;display:block;margin-top:8px">bogdan@two26.studio</a></div><div><div class="label" style="color:#FFD9B8">JOB APPLICATIONS</div><a href="mailto:diana@two26.studio" style="font-size:20px;font-weight:800;display:block;margin-top:8px">diana@two26.studio</a></div></div><div style="margin-top:50px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px"><div style="display:flex;gap:8px"><a href="https://www.instagram.com/two26_studio/" target="_blank" rel="noopener" style="border:1.5px solid #FFF6EC;border-radius:999px;padding:10px 16px;font-weight:700">Instagram</a><a href="https://www.linkedin.com/company/two26-studio/" target="_blank" rel="noopener" style="border:1.5px solid #FFF6EC;border-radius:999px;padding:10px 16px;font-weight:700">Linkedin</a></div><div style="background:#fff;color:#111;border-radius:16px 16px 0 0;padding:16px 18px;text-align:center;transform:translateY(20px)"><div style="font-size:28px"><span class="wave-hand">✋</span></div><div style="font-family:Anton,sans-serif;color:var(--orange);font-size:22px">LET'S TALK ☺</div><div style="font-size:12px;opacity:.6">hand rising from below</div></div></div></div>
+<div id="overlay"><div style="display:flex;justify-content:space-between;align-items:center"><div style="font-family:Anton,sans-serif;font-size:28px">TWO 26</div><button onclick="closeOverlay()" style="background:#FFF6EC;border:none;border-radius:999px;padding:10px 18px;font-weight:800">Close ×</button></div><h2><span>WANT TO</span><span>START</span><span>A NEW</span><span>PROJECT?</span></h2><p style="color:#FFD9B8;font-size:20px;font-weight:600">or just say hello!</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:700px;margin-top:30px"><div><div class="label" style="color:#FFD9B8">INQUIRIES &amp; COMMISSIONS</div><a href="mailto:bogdan@two26.studio" style="font-size:20px;font-weight:800;display:block;margin-top:8px">bogdan@two26.studio</a></div><div><div class="label" style="color:#FFD9B8">JOB APPLICATIONS</div><a href="mailto:diana@two26.studio" style="font-size:20px;font-weight:800;display:block;margin-top:8px">diana@two26.studio</a></div></div><div style="margin-top:50px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px"><div style="display:flex;gap:8px"><a href="https://www.instagram.com/two26_studio/" target="_blank" rel="noopener" style="border:1.5px solid #FFF6EC;border-radius:999px;padding:10px 16px;font-weight:700">Instagram</a><a href="https://www.linkedin.com/company/two26-studio/" target="_blank" rel="noopener" style="border:1.5px solid #FFF6EC;border-radius:999px;padding:10px 16px;font-weight:700">Linkedin</a></div><div style="background:#fff;color:#111;border-radius:16px 16px 0 0;padding:16px 18px;text-align:center;transform:translateY(20px)"><div><span class="wave-hand"><svg viewBox="0 0 60 60" width="40" height="40" aria-hidden="true"><circle cx="30" cy="30" r="26" fill="#FFD9B8" stroke="#111" stroke-width="3"/><circle cx="21" cy="26" r="3.5" fill="#111"/><circle cx="39" cy="26" r="3.5" fill="#111"/><path d="M19 38 Q30 48 41 38" fill="none" stroke="#111" stroke-width="3.5" stroke-linecap="round"/><circle cx="14" cy="34" r="3" fill="#FF9D7A"/><circle cx="46" cy="34" r="3" fill="#FF9D7A"/></svg></span></div><div style="font-family:Anton,sans-serif;color:var(--orange);font-size:22px">LET'S TALK</div><div style="font-size:12px;opacity:.6">say hello — we don't bite</div></div></div></div>
 
 <a class="vasux" href="https://vasux.in" target="_blank" rel="noopener"><span></span> Crafted by vasux.in ↗</a>
 
 <script>
 const projects=[
-{n:"HEYGLUCO",c:"HEALTH & WELLNESS",bg:"linear-gradient(135deg,#7EDDD0,#2AA198)",label:"HEYGLUCO",emoji:"🐉",id:"heygluco"},
-{n:"THE BAGEL BAR",c:"FOOD & BEVERAGE",bg:"linear-gradient(135deg,#FF8A3D,#FF4D00)",label:"The BAGEL BAR",emoji:"🥯"},
-{n:"TANTI MARIA",c:"FOOD & RETAIL",bg:"repeating-linear-gradient(45deg,#FF3B30 0 28px,#FF9500 28px 56px)",label:"TANTI MARIA",emoji:"◆"},
-{n:"MUNCHIES AND CREAM",c:"FOOD & BEVERAGE",bg:"linear-gradient(135deg,#FF9DE2,#B28DFF)",label:"MUNCHIES",emoji:"🍦"},
-{n:"MVP",c:"SPORTS & TALENT MANAGEMENT",bg:"linear-gradient(135deg,#4DA6FF,#0066FF)",label:"MVP",emoji:"🧢"},
-{n:"YUM YUM",c:"FOOD & BEVERAGE",bg:"linear-gradient(135deg,#111,#333)",label:"YUM YUM",emoji:"🫐"},
-{n:"LP ONE",c:"AUTOMOTIVE & MOTORSPORT",bg:"linear-gradient(135deg,#111,#444)",label:"LP1",emoji:"🏎️"},
-{n:"MERCI",c:"FOOD & BEVERAGE",bg:"linear-gradient(135deg,#8B5A2B,#D9A066)",label:"merci",emoji:"🍰"},
+{n:"HEYGLUCO",c:"HEALTH & WELLNESS",label:"HEYGLUCO",img:"assets/heygluco.jpg",alt:"Gluco, the friendly green dragon mascot of HeyGluco",id:"heygluco"},
+{n:"THE BAGEL BAR",c:"FOOD & BEVERAGE",label:"The BAGEL BAR",img:"assets/bagel.jpg",alt:"Fresh bagels with sesame and poppy seeds in a bakery basket"},
+{n:"TANTI MARIA",c:"FOOD & RETAIL",label:"TANTI MARIA",img:"assets/tanti.jpg",alt:"Fresh Italian pasta varieties displayed in wooden trays at a market"},
+{n:"MUNCHIES AND CREAM",c:"FOOD & BEVERAGE",label:"MUNCHIES",img:"assets/munchies.jpg",alt:"Colourful scoops of ice cream in pink, yellow, green and chocolate"},
+{n:"MVP",c:"SPORTS & TALENT MANAGEMENT",label:"MVP",img:"assets/mvp.jpg",alt:"Footballer in a red kit striking a ball under stadium lights"},
+{n:"YUM YUM",c:"FOOD & BEVERAGE",label:"YUM YUM",img:"assets/yumyum.jpg",alt:"Gourmet burger with melted cheese and caramelised onions on a dark background"},
+{n:"LP ONE",c:"AUTOMOTIVE & MOTORSPORT",label:"LP1",img:"assets/lpone.jpg",alt:"Red single-seater race car speeding down a track at sunset"},
+{n:"MERCI",c:"FOOD & BEVERAGE",label:"merci",img:"assets/merci.jpg",alt:"French patisserie cakes and fruit tarts in a bakery display"},
 ];
-function cardHTML(p,clickable){return `<article class="card"><div class="card-img" style="background:${p.bg};color:#fff"><div style="text-align:center"><div style="font-size:72px;line-height:1">${p.emoji}</div><b style="font-size:34px">${p.label}</b></div></div><div class="card-body"><div><h3>${p.n}</h3><p>${p.c}</p></div><div class="arrow" ${clickable&&p.id?`onclick="showView('project')" style="cursor:pointer"`:''}>↗</div></div></article>`}
+function cardHTML(p,clickable){return `<article class="card"><div class="card-img"><img src="${p.img}" alt="${p.alt}" loading="lazy"><span class="card-tag">${p.label}</span></div><div class="card-body"><div><h3>${p.n}</h3><p>${p.c}</p></div><div class="arrow" ${clickable&&p.id?`onclick="showView('project')" style="cursor:pointer"`:''}>↗</div></div></article>`}
 document.getElementById('htrack').innerHTML=projects.slice(0,6).map(p=>cardHTML(p,true)).join('');
 document.getElementById('workGrid').innerHTML=projects.map(p=>cardHTML(p,true)).join('');
 // marquee
@@ -364,20 +369,28 @@ document.getElementById('marquee').innerHTML=`<span>${phrase.repeat(6)}</span><s
 // about split
 const at=document.getElementById('aboutText'); const words=at.textContent.trim().split(/\s+/); at.innerHTML=words.map(w=>`<span class="w">${w}</span>`).join(' ');
 // services
+const svcIcons={
+pencil:'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>',
+cube:'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>',
+globe:'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20Z"/></svg>',
+sun:'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+film:'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4v16M17 4v16M2 9h5M2 15h5M17 9h5M17 15h5"/></svg>',
+box:'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="M3 8l9 5 9-5M12 13v8M7.5 5.5l9 5"/></svg>',
+eye:'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>'};
 const services=[
-["BRAND STRATEGY","We find the idea, the angle and the reasons people should care.","✏️"],
-["BRAND IDENTITY","We give your brand a distinctive look, feel and personality that feel unmistakably yours.","🧊"],
-["WEB DESIGN","We turn your brand into a digital experience that looks great, feels right and is easy to navigate.","🌐"],
-["ILLUSTRATION","We create distinctive illustrations that add character to your brand.","☀️"],
-["MOTION DESIGN","We make your brand move, cause standing still just isn't enough.","🎬"],
-["PACKAGING DESIGN","We create packaging that catches the eye and works better for your brand.","📦"],
-["ART DIRECTION","We keep all the moving parts moving in the same direction, from the big idea down to the smallest detail.","👁️"],
+["BRAND STRATEGY","We find the idea, the angle and the reasons people should care.",svcIcons.pencil],
+["BRAND IDENTITY","We give your brand a distinctive look, feel and personality that feel unmistakably yours.",svcIcons.cube],
+["WEB DESIGN","We turn your brand into a digital experience that looks great, feels right and is easy to navigate.",svcIcons.globe],
+["ILLUSTRATION","We create distinctive illustrations that add character to your brand.",svcIcons.sun],
+["MOTION DESIGN","We make your brand move, cause standing still just isn't enough.",svcIcons.film],
+["PACKAGING DESIGN","We create packaging that catches the eye and works better for your brand.",svcIcons.box],
+["ART DIRECTION","We keep all the moving parts moving in the same direction, from the big idea down to the smallest detail.",svcIcons.eye],
 ];
 document.getElementById('servicesList').innerHTML=services.map((s,i)=>`<div class="svc"><h3>${s[0]} <span class="svc-icon">${s[2]}</span></h3><div><span class="svc-bubble">${s[1]}</span></div></div>`).join('');
 // testimonials
 const testis=[
 ["Working with Bogdan and Diana has been one of the smoothest collaborations I've had","Ruxandra Florescu, COO, Dare Digital","They're sharp, always responsive, and have a real talent for turning briefs into compelling visuals. No matter the challenge: tight deadlines, shifting requirements, tricky creative constraints, they always show up with solutions. Highly recommend working with them!","RF"],
-["Bogdan and Diana truly brought HeyGluco to life","Luiza Zamfirescu, Co-Founder, HeyGluco","Both of them are truly amazing humans, with an incredible amount of creativity and talent. They took our vision, understood it completely, and brought it to life in ways that went beyond anything we could have imagined. We absolutely loved working with them and feel incredibly lucky that, along the way, we got to call them friends. We cannot brag about them or recommend them highly enough. They are the kind of people you feel lucky to have found, and luckier to have worked with! ❤️","LZ"],
+["Bogdan and Diana truly brought HeyGluco to life","Luiza Zamfirescu, Co-Founder, HeyGluco","Both of them are truly amazing humans, with an incredible amount of creativity and talent. They took our vision, understood it completely, and brought it to life in ways that went beyond anything we could have imagined. We absolutely loved working with them and feel incredibly lucky that, along the way, we got to call them friends. We cannot brag about them or recommend them highly enough. They are the kind of people you feel lucky to have found, and luckier to have worked with!","LZ"],
 ["Working with Two26 is a bit like brainstorming ideas with your best friends","Vlad Belcin, Sr. Copywriter, Dare Digital","Always fun, always insightful, always constructive. It hardly feels like working, cause the whole process is always so smooth. That's what you get for getting the job done with cool creatives, I guess.","VB"],
 ["Four projects and counting","Ionut Belet, Founder, MVP Agency","We've worked together on two websites and two visual identities so far, and it's been a pleasure every time. Great ideas, really well executed, and just lovely people to work with. Pretty sure we're not done yet.","IB"],
 ["Better than we imagined","Monica Tantu, Co-Founder, Merci","Working with Two26 on our brand identity was a great experience from start to finish. They're incredibly creative and thoughtful, but also easy to work with and genuinely invested in getting things right. They brought ideas we wouldn't have thought of ourselves and gave the brand a personality that really feels like us. You can tell they care about the work, but also about the people behind it.","MT"],
@@ -386,16 +399,22 @@ const testis=[
 const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let tIdx=0, tPos=0;
 const stackEl=document.getElementById('stack');
-stackEl.innerHTML=testis.map((t,i)=>`<div class="tcard"><div style="display:flex;gap:12px;align-items:center"><div class="avatar">${t[3]}</div><div><b>${t[1]}</b><div style="font-size:12px;opacity:.6">Testimonial ${i+1} / 5</div></div></div><h4>“${t[0]}”</h4><p>${t[2]}</p></div>`).join('');
+stackEl.innerHTML=testis.map((t,i)=>`<div class="tcard"><div class="tcard-in"><div style="display:flex;gap:12px;align-items:center"><div class="avatar">${t[3]}</div><div><b>${t[1]}</b><div style="font-size:12px;opacity:.6">Testimonial ${i+1} / 5</div></div></div><h4>“${t[0]}”</h4><p>${t[2]}</p></div></div>`).join('');
 const tCards=stackEl.querySelectorAll('.tcard');
 function renderTicks(){document.getElementById('ticks').innerHTML=testis.map((_,i)=>`<i class="${i===tIdx?'on':''}"></i>`).join('')}
 function setTestiPos(pos){
  tPos=Math.max(0,Math.min(testis.length-1,pos));
  tCards.forEach((card,i)=>{
-  const off=i-tPos; let tr,op,z;
-  if(off<0){tr=`translateY(${(off*115).toFixed(1)}%) rotate(${(off*7).toFixed(2)}deg)`; op=Math.max(0,1+off*1.5); z=30+Math.round(off)}
-  else{tr=`translateY(${(off*14).toFixed(1)}px) rotate(${(off*4).toFixed(2)}deg) scale(${(1-off*.05).toFixed(3)})`; op=off>2.4?0:1; z=10-Math.round(off)}
+  const off=i-tPos; const inner=card.firstElementChild; let tr,op,z,innerOp;
+  if(off<0){
+   // exiting card: flies up and rotates away, its text fades with it — never overlaps the next card
+   tr=`translateY(${(off*112).toFixed(1)}%) rotate(${(off*6).toFixed(2)}deg)`; op=Math.max(0,1+off*1.4); innerOp=Math.max(0,1+off*2.2); z=30+Math.round(off);
+  } else {
+   // cards behind: only their white edges peek out below the front card — text stays fully hidden
+   tr=`translateY(${(off*16).toFixed(1)}px) rotate(${(off*2.5).toFixed(2)}deg) scale(${(1-off*.045).toFixed(3)})`; op=off>2.4?0:1; innerOp=off<.5?Math.max(0,1-off*2):0; z=10-Math.round(off);
+  }
   card.style.transform=tr; card.style.opacity=op; card.style.zIndex=z; card.style.pointerEvents=Math.abs(off)<.5?'auto':'none';
+  if(inner)inner.style.opacity=innerOp.toFixed(2);
  });
  const idx=Math.round(tPos); if(idx!==tIdx){tIdx=idx; renderTicks()}
 }
