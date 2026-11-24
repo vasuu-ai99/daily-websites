@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<link rel="icon" href="data:,"/>
+<title>Two26 Studio | Boutique Design Studio — Clone</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--peach:#FFF1E6;--peach2:#FDEFE3;--peach-mid:#F3E3D3;--orange:#FF4D00;--orange2:#FF5500;--black:#111111;--cream:#FFF8F0;--tan:#F6E8D8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--peach);color:var(--black);font-family:Archivo,system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer;min-height:44px}
+h1,h2,.cond{font-family:Anton,Archivo,sans-serif;text-transform:uppercase;line-height:.88;letter-spacing:.01em;font-weight:400}
+.label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700}
+.label.orange{color:var(--orange)}
+/* PRELOADER */
+#preloader{position:fixed;inset:0;background:var(--peach2);z-index:10000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity .6s, visibility .6s}
+#preloader.hide{opacity:0;visibility:hidden}
+.wmark{width:72px;height:52px;animation:pulse 1s ease-in-out infinite alternate}
+@keyframes pulse{from{transform:scale(.92)}to{transform:scale(1.06)}}
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;pointer-events:none}
+header>*{pointer-events:auto}
+.nav-left{display:flex;gap:8px}
+.pill-nav{background:#fff;border:1.5px solid #111;border-radius:999px;padding:10px 18px;font-weight:700;font-size:14px;min-height:44px;display:inline-flex;align-items:center}
+.logo{font-family:Anton,sans-serif;font-size:32px;color:var(--orange);letter-spacing:.02em;line-height:1;cursor:pointer;background:none;border:none}
+.logo span{font-weight:400}
+.hours{font-size:12px;line-height:1.2;font-weight:600;text-align:right}
+.h-right{display:flex;align-items:center;gap:14px}
+.btn-talk{background:#111;color:#fff;border:none;border-radius:999px;padding:6px 6px 6px 18px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+.btn-talk i{width:36px;height:36px;background:var(--orange);border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:18px}
+/* VIEWS */
+.view{display:none}.view.active{display:block}
+/* HERO */
+.hero{position:relative;padding:110px 18px 0;text-align:center;overflow:hidden;background:var(--peach)}
+.hero h1{font-size:clamp(56px,11.5vw,172px);color:var(--orange);margin:10px 0 0}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .inner{display:inline-block;animation:rise .9s cubic-bezier(.2,.9,.2,1) both}
+.hero h1 .line:nth-child(2) .inner{animation-delay:.12s}.hero h1 .line:nth-child(3) .inner{animation-delay:.24s}
+@keyframes rise{from{transform:translateY(110%)}to{transform:translateY(0)}}
+.black-pill{position:absolute;background:#111;color:#fff;padding:10px 16px;border-radius:999px;font-weight:700;font-size:13px;white-space:nowrap;box-shadow:0 6px 0 rgba(0,0,0,.08);z-index:3}
+.bp1{left:18%;top:22%;transform:rotate(-6deg)} .bp2{right:14%;top:48%;transform:rotate(4deg)} .bp3{left:22%;top:72%;transform:rotate(-3deg)}
+@media(max-width:700px){.bp1{left:4%;top:18%}.bp2{right:2%;top:44%}.bp3{left:6%}.hours{display:none}.logo{font-size:26px}}
+.illustration{max-width:980px;margin:10px auto 0;height:380px;position:relative}
+.loop-svg{position:absolute;pointer-events:none}
+.cat{position:absolute;font-size:13px;font-weight:800;background:#fff;border:2px solid #111;border-radius:999px;padding:6px 10px}
+.board{background:#FFD9C2;border:3px solid #111;border-radius:12px;display:grid;place-items:center;font-family:Anton,sans-serif;color:var(--orange)}
+.figure{position:absolute;border-radius:18px 18px 0 0}
+/* MARQUEE */
+.marquee-wrap{overflow:hidden;background:var(--orange);transform:rotate(-1.2deg) scale(1.02);margin:28px -10px 0;position:relative;z-index:5}
+.marquee{display:flex;width:max-content;animation:marq 18s linear infinite;padding:14px 0}
+.marquee span{font-family:Anton,sans-serif;color:#FFF1E6;font-size:clamp(20px,3vw,36px);white-space:nowrap;padding-right:18px;letter-spacing:.03em}
+@keyframes marq{to{transform:translateX(-50%)}}
+/* ABOUT */
+.section{padding:72px 22px;max-width:1280px;margin:0 auto;position:relative}
+.about-text{font-size:clamp(26px,3.6vw,48px);line-height:1.08;font-weight:600;letter-spacing:-.02em;max-width:1020px;margin-top:18px}
+.about-text .w{color:#E9CDB6;transition:color .3s}
+.about-text .w.mid{color:var(--orange)} .about-text .w.on{color:#111}
+.orange-pill{position:absolute;background:var(--orange);color:#fff;padding:10px 16px;border-radius:999px;font-weight:700;font-size:13px;box-shadow:0 8px 20px rgba(255,77,0,.25);z-index:2}
+/* WORKS H SCROLL */
+.works-outer{background:var(--peach)}
+.works-pin{position:relative}
+.works-head{padding:20px 22px 10px;max-width:1280px;margin:0 auto}
+.works-head h2{font-size:clamp(54px,10vw,148px);margin:6px 0;color:#111}
+.hscroll-viewport{overflow:hidden;padding:10px 0 30px}
+.hscroll-track{display:flex;gap:20px;padding:0 22px;width:max-content;transition:transform .1s linear}
+.card{width:min(78vw,380px);flex-shrink:0;background:#fff;border-radius:22px;overflow:hidden;border:1px solid rgba(0,0,0,.06)}
+.card-img{height:380px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card-img b{font-family:Anton,sans-serif;font-size:28px;text-align:center;line-height:.9;padding:20px}
+.card-body{padding:16px;display:flex;justify-content:space-between;align-items:flex-end}
+.card-body h3{margin:0;font-family:Anton,sans-serif;font-size:26px}
+.card-body p{margin:4px 0 0;color:var(--orange);font-size:11px;letter-spacing:.14em;font-weight:800}
+.arrow{width:44px;height:44px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-size:20px;flex-shrink:0}
+.progress{width:120px;height:22px;background:#EADBCB;border-radius:999px;margin:6px auto 0;position:relative}
+.progress i{position:absolute;left:6px;top:50%;transform:translateY(-50%);width:14px;height:14px;background:var(--orange);border-radius:50%}
+.end-block{max-width:1280px;margin:0 auto;padding:50px 22px 70px;position:relative}
+.end-block h3{font-size:clamp(36px,6vw,72px);margin:0;line-height:.95}
+/* SERVICES */
+.svc{border-top:1px solid rgba(0,0,0,.08);padding:34px 0;position:relative}
+.svc h3{font-size:clamp(42px,7vw,92px);margin:0;line-height:.9}
+.svc-bubble{display:inline-block;background:var(--orange);color:#fff;padding:12px 16px;border-radius:18px 18px 18px 4px;max-width:520px;font-weight:600;line-height:1.35;margin-top:14px;transform:rotate(-1deg)}
+.svc-icon{font-size:28px;background:#111;color:#fff;width:52px;height:52px;border-radius:14px;display:inline-grid;place-items:center;vertical-align:middle;margin-left:12px;transform:rotate(6deg)}
+.line-svg{position:absolute;left:6%;top:0;height:100%;width:120px;pointer-events:none;opacity:.9}
+/* TESTIMONIALS */
+.testi{background:var(--orange);border-radius:28px;margin:0;padding:42px 22px 56px;color:#FFF6EC;position:relative;overflow:hidden;width:100%}
+.testi-outer{position:relative;margin:20px 0}
+.testi h2{color:#FFF6EC;font-size:clamp(44px,8vw,96px);margin:8px 0 28px}
+.stack{position:relative;height:420px;max-width:680px;margin:0 auto}
+.tcard{position:absolute;inset:0;background:#fff;color:#111;border-radius:20px;padding:26px;box-shadow:0 20px 40px rgba(0,0,0,.18);transition:all .5s cubic-bezier(.2,.9,.2,1)}
+.tcard h4{font-size:20px;line-height:1.25;margin:10px 0}
+.tcard p{line-height:1.55;color:#333}
+.avatar{width:48px;height:48px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:800}
+.ticks{position:absolute;right:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px}
+.ticks i{width:18px;height:3px;background:rgba(255,255,255,.4);display:block;border-radius:99px}.ticks i.on{width:36px;background:#fff}
+/* FAQ */
+.faq-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:30px;margin-top:24px}
+@media(max-width:800px){.faq-grid{grid-template-columns:1fr}}
+.faq-item{margin-bottom:10px}
+.faq-q{width:100%;text-align:left;background:var(--tan);border:none;padding:18px 18px;border-radius:16px 16px 0 0;font-weight:700;font-size:16px;display:flex;justify-content:space-between;align-items:center}
+.faq-item.open .faq-q{background:#fff;border:2px solid var(--orange);color:var(--orange);border-radius:999px;width:72%}
+.faq-a{display:none;background:#fff;border-radius:18px;padding:20px;line-height:1.6;position:relative;margin-top:10px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+.faq-item.open .faq-a{display:block}
+.badge26{position:absolute;right:-10px;top:-14px;width:52px;height:52px;background:var(--orange);color:#fff;border-radius:50%;display:grid;place-items:center;font-family:Anton,sans-serif;font-size:20px;border:3px solid var(--peach)}
+/* FOOTER */
+footer{background:var(--orange);color:#FFF3E6;padding:54px 22px 0;overflow:hidden;position:relative;margin-top:40px}
+footer h2{font-size:clamp(44px,7vw,84px);color:#FFF3E6;margin:0;line-height:.92}
+.foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:20px;margin-top:36px}
+@media(max-width:800px){.foot-grid{grid-template-columns:1fr 1fr}}
+.foot-grid a{display:block;padding:6px 0;opacity:.95}
+.giant{font-family:Anton,sans-serif;font-size:clamp(80px,19vw,290px);line-height:.78;text-align:center;color:#FFF1E6;transform:translateY(18%);white-space:nowrap;letter-spacing:.02em}
+/* OVERLAY */
+#overlay{position:fixed;inset:0;background:var(--orange);z-index:1000;color:#FFF6EC;padding:20px;display:none;overflow:auto}
+#overlay.open{display:block}
+#overlay h2{font-size:clamp(52px,10vw,120px);color:#FFF6EC;margin:30px 0;line-height:.9}
+#overlay h2 span{display:block}#overlay h2 span:nth-child(2){margin-left:8vw}#overlay h2 span:nth-child(3){margin-left:3vw}#overlay h2 span:nth-child(4){margin-left:12vw}
+/* WORK / ABOUT pages */
+.page-hero{padding:120px 22px 30px;max-width:1280px;margin:0 auto}
+.page-hero h1{font-size:clamp(52px,9vw,124px);color:var(--orange);margin:0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1280px;margin:0 auto;padding:20px 22px 60px}
+@media(max-width:900px){.grid3{grid-template-columns:1fr 1fr}}@media(max-width:560px){.grid3{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1.5px solid #111;border-radius:999px;padding:8px 12px;font-weight:700;font-size:13px;background:#fff}
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}@media(max-width:700px){.rules{grid-template-columns:1fr}}
+.rule{background:#fff;border-radius:18px;padding:20px}.rule b{color:var(--orange);font-family:Anton,sans-serif;font-size:22px}
+/* vasux badge */
+.vasux{position:fixed;right:14px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:10001;background:#111;color:#fff;padding:11px 15px;border-radius:999px;font-size:13px;font-weight:700;display:flex;gap:8px;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.2)}
+@media(max-width:600px){.vasux{bottom:calc(22px + env(safe-area-inset-bottom,0px));right:12px;font-size:12px}}
+.vasux span{width:8px;height:8px;background:#FF4D00;border-radius:50%;display:block}
+/* ============ ANIMATIONS (full pass) ============ */
+:root{--ease:cubic-bezier(.22,1,.36,1)}
+/* preloader exit: curtain slides up */
+#preloader{transition:transform .8s var(--ease),opacity .5s,visibility .8s}
+#preloader.hide{opacity:1;transform:translateY(-102%);visibility:hidden}
+#preloader .wmark path{stroke-dasharray:340;stroke-dashoffset:340;animation:draw 1.1s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+/* header entrance */
+header{animation:headIn .8s var(--ease) .9s both}
+@keyframes headIn{from{transform:translateY(-110%);opacity:0}to{transform:none;opacity:1}}
+/* generic scroll reveal */
+.reveal{opacity:0;transform:translateY(46px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal-pop{opacity:0;transform:scale(.8) rotate(-4deg);transition:opacity .6s var(--ease),transform .6s cubic-bezier(.34,1.56,.64,1)}
+.reveal-pop.in{opacity:1;transform:scale(1) rotate(var(--rot,0deg))}
+/* hero pills: entrance pop + endless float */
+.black-pill{animation:floaty 3.4s ease-in-out infinite alternate}
+.bp1{animation-delay:.15s}.bp2{animation-delay:.7s}.bp3{animation-delay:1.1s}
+@keyframes floaty{from{margin-top:0}to{margin-top:-12px}}
+.hero .black-pill{box-shadow:0 10px 24px rgba(0,0,0,.14)}
+.illustration>div{animation:bob 4s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+.loop-svg path{stroke-dasharray:900;stroke-dashoffset:900;animation:draw 1.8s var(--ease) .5s forwards}
+/* marquee bend/skew driven by scroll velocity (JS sets --skew/--bend) */
+.marquee-wrap{transform:rotate(-1.2deg) scale(1.03) skewX(var(--skew,0deg));border-radius:0 0 var(--bend,0px) var(--bend,0px)/0 0 60px 60px;will-change:transform}
+.marquee{animation-duration:14s}
+.marquee-wrap:hover .marquee{animation-play-state:paused}
+/* about pills pop when section enters */
+.orange-pill{transition:transform .2s}
+.about-pill-hidden{opacity:0}
+/* WORKS: pinned horizontal scroll */
+.works-outer{height:360vh;position:relative}
+.works-pin{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.works-pin .hscroll-viewport{overflow:visible}
+.hscroll-track{transition:none;will-change:transform}
+.card{transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.card:hover{transform:translateY(-10px) rotate(-1deg);box-shadow:0 24px 44px rgba(0,0,0,.14)}
+.card .card-img>div{transition:transform .5s var(--ease)}
+.card:hover .card-img>div{transform:scale(1.08) rotate(-2deg)}
+.card:hover .arrow{transform:rotate(45deg)}
+.arrow{transition:transform .35s var(--ease)}
+.progress{overflow:visible}
+.progress i{transition:left .1s linear}
+.end-block h3{overflow:hidden}
+/* services: rows slide in, icons pop, winding line draws */
+.svc{opacity:0;transform:translateX(-56px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.svc:nth-child(even of .svc){transform:translateX(56px)}
+.svc.in{opacity:1;transform:none}
+.svc.in .svc-icon{animation:pop .55s cubic-bezier(.34,1.8,.64,1) both .25s}
+@keyframes pop{from{transform:scale(0) rotate(-40deg)}to{transform:scale(1) rotate(6deg)}}
+.svc-bubble{transition:transform .3s var(--ease)}
+.svc:hover .svc-bubble{transform:rotate(0deg) scale(1.03)}
+#svcLine{position:absolute;left:2%;top:0;width:110px;height:100%;pointer-events:none;overflow:visible;z-index:0}
+#servicesList .svc{z-index:1}
+/* testimonials: fan-in + card motion */
+.stack .tcard{will-change:transform,opacity}
+.testi .stack{opacity:0;transform:translateY(50px) rotate(-2deg);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.testi.in .stack{opacity:1;transform:none}
+/* testimonials: pinned full-screen — page stops, scroll flips the cards */
+.testi-outer{height:460vh}
+.testi-pin{position:sticky;top:0;height:100vh;height:100svh;padding:14px;display:flex}
+.testi{height:100%;display:flex;flex-direction:column;justify-content:center}
+.testi .stack{height:min(600px,56vh);width:100%}
+.testi .tcard{transition:none;overflow-y:auto}
+.testi .ticks{z-index:40}
+.tnav button{transition:transform .25s var(--ease)}
+.tnav button:hover{transform:translateY(-2px) scale(1.04)}
+.tnav button:active{transform:scale(.96)}
+/* FAQ: smooth accordion */
+.faq-a{display:block;max-height:0;opacity:0;overflow:hidden;padding:0 20px;margin-top:0;transition:max-height .55s var(--ease),opacity .4s,padding .55s var(--ease),margin .55s var(--ease)}
+.faq-item.open .faq-a{opacity:1;padding:20px;margin-top:10px}
+.faq-q{transition:all .35s var(--ease)}
+.faq-q span{display:inline-block;transition:transform .35s var(--ease)}
+.faq-item.open .faq-q span{transform:rotate(180deg)}
+.badge26{animation:none}
+.faq-item.open .badge26{animation:pop .5s cubic-bezier(.34,1.8,.64,1) both}
+.faq-cat{animation:floaty 3s ease-in-out infinite alternate}
+/* footer giant wordmark reveal */
+.giant{transform:translateY(62%);opacity:.25;transition:transform 1.1s var(--ease),opacity 1.1s var(--ease)}
+footer.in .giant{transform:translateY(18%);opacity:1}
+footer a{transition:transform .25s var(--ease),opacity .25s}
+footer a:hover{transform:translateX(6px);opacity:1}
+/* buttons */
+.btn-talk,.pill-nav{transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.btn-talk:hover,.pill-nav:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 10px 22px rgba(0,0,0,.16)}
+.btn-talk:active,.pill-nav:active{transform:scale(.96)}
+.chip{transition:transform .25s var(--ease),background .25s,color .25s}
+.chip:hover{transform:translateY(-3px) rotate(-1deg);background:#111;color:#fff}
+.rule{transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.rule:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:0 16px 32px rgba(0,0,0,.1)}
+/* overlay: slide-up reveal + staggered lines + waving hand */
+#overlay{display:none}
+#overlay.open{display:block;animation:overlayIn .65s var(--ease)}
+#overlay.closing{display:block;animation:overlayOut .55s var(--ease) forwards}
+@keyframes overlayIn{from{transform:translateY(103%)}to{transform:none}}
+@keyframes overlayOut{to{transform:translateY(103%)}}
+#overlay.open h2 span{display:block;animation:spanIn .7s var(--ease) both}
+#overlay.open h2 span:nth-child(2){animation-delay:.08s}#overlay.open h2 span:nth-child(3){animation-delay:.16s}#overlay.open h2 span:nth-child(4){animation-delay:.24s}
+@keyframes spanIn{from{transform:translateY(60px);opacity:0}to{transform:none;opacity:1}}
+#overlay .wave-hand{display:inline-block;animation:wave 1.6s ease-in-out infinite;transform-origin:70% 80%}
+@keyframes wave{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(16deg)}20%{transform:rotate(-8deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-4deg)}50%{transform:rotate(10deg)}}
+/* view transitions */
+.view.active{animation:viewIn .55s var(--ease)}
+@keyframes viewIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+/* vasux badge pulse dot */
+.vasux span{animation:pulse 1.2s ease-in-out infinite alternate}
+@media(max-width:700px){.works-outer{height:320vh}.works-pin{justify-content:flex-start;padding-top:84px}.testi-outer{height:420vh}.testi-pin{padding:10px}.testi{padding:30px 16px 40px}.testi .stack{height:54vh}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}.works-outer{height:auto}.works-pin{position:static;height:auto}.hscroll-viewport{overflow-x:auto!important}.testi-outer{height:auto}.testi-pin{position:static;height:auto;padding:14px 0}.testi{height:auto}}
+</style>
+</head>
+<body>
+<div id="preloader"><svg class="wmark" viewBox="0 0 100 60"><path d="M5 10 L22 50 L35 18 L48 50 L62 18 L75 50 L92 10" fill="none" stroke="#FF4D00" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="font-weight:800;letter-spacing:.2em;font-size:12px">TWO26 STUDIO</div><div style="font-size:12px;opacity:.6">Loading suspiciously good design…</div></div>
+
+<header>
+  <div class="nav-left"><button class="pill-nav" onclick="showView('work')">Work</button><button class="pill-nav" onclick="showView('about')">About us</button></div>
+  <button class="logo" onclick="showView('home')">TWO<span>26</span></button>
+  <div class="h-right"><div class="hours">Monday–Friday<br>10:00 – 17:00</div><button class="btn-talk" onclick="openOverlay()">Let's Talk <i>↗</i></button></div>
+</header>
+
+<!-- HOME VIEW -->
+<div id="view-home" class="view active">
+  <section class="hero">
+    <svg class="loop-svg" style="left:-40px;top:60px;width:220px" viewBox="0 0 200 200"><path d="M10 100 C10 20, 90 20, 90 100 C90 180, 170 180, 170 90 C170 30, 90 40, 60 90" fill="none" stroke="#FF4D00" stroke-width="14" stroke-linecap="round"/></svg>
+    <svg class="loop-svg" style="right:-30px;top:10px;width:180px" viewBox="0 0 200 200"><path d="M20 150 C80 20, 180 60, 120 140 C80 190, 20 120, 70 70" fill="none" stroke="#FF4D00" stroke-width="12" stroke-linecap="round"/></svg>
+    <div class="black-pill bp1">Independent studio</div><div class="black-pill bp2">Branding &amp; design</div><div class="black-pill bp3">No funny business</div>
+    <h1><span class="line"><span class="inner">LOOKING</span></span><span class="line"><span class="inner">SUSPICIOUSLY</span></span><span class="line"><span class="inner">GOOD</span></span></h1>
+    <div class="illustration">
+      <div style="position:absolute;left:5%;bottom:26px;font-size:54px;transform:rotate(-6deg)">🐱</div>
+      <div style="position:absolute;left:28%;bottom:0;width:170px;height:290px;background:#FF4D00;border-radius:20px 20px 0 0;display:flex;flex-direction:column;align-items:center;padding-top:18px;color:#fff"><div style="width:56px;height:56px;background:#FFD9B8;border-radius:50%;border:3px solid #111;display:grid;place-items:center;font-size:22px">🕶️</div><div class="board" style="width:110px;height:90px;margin-top:18px;font-size:28px">TWO</div><div style="margin-top:12px;display:flex;gap:18px"><span style="width:14px;height:70px;background:#FFE9D6;display:block;transform:rotate(6deg)"></span><span style="width:14px;height:70px;background:#fff;display:block"></span></div></div>
+      <div style="position:absolute;right:24%;bottom:0;width:170px;height:280px;background:#fff;border:2px solid #111;border-radius:20px 20px 0 0;display:flex;flex-direction:column;align-items:center;padding-top:16px"><div style="width:56px;height:56px;background:#2B1A12;border-radius:50%;border:3px solid #111"></div><div class="board" style="width:110px;height:90px;margin-top:16px;font-size:32px;background:#FFE9D6">26</div><div style="margin-top:10px;width:90px;height:54px;background:#FF4D00;border-radius:0 0 14px 14px"></div></div>
+      <div style="position:absolute;right:4%;bottom:22px;font-size:52px;transform:rotate(4deg)">🐈‍⬛</div>
+    </div>
+  </section>
+
+  <div class="marquee-wrap"><div class="marquee" id="marquee"></div></div>
+
+  <section class="section" id="aboutSec">
+    <div class="label orange">A BIT ABOUT US</div>
+    <div class="orange-pill" style="right:12%;top:90px;transform:rotate(3deg)">Professional overthinkers</div>
+    <div class="orange-pill" style="left:6%;top:210px;transform:rotate(-2deg)">Nerding out on design</div>
+    <div class="orange-pill" style="right:18%;bottom:30px;transform:rotate(2deg)">Allergic to generic</div>
+    <p class="about-text" id="aboutText">We believe creative work needs focus. That's why we keep our team tight and our involvement high, so every project gets our full attention. We build brands from scratch or make them better.</p>
+  </section>
+
+  <div class="works-outer" id="worksOuter">
+    <div class="works-pin" id="worksPin">
+    <div class="works-head"><div class="label orange">FEATURED PROJECTS</div><h2>SELECTED WORKS</h2></div>
+    <div class="hscroll-viewport"><div class="hscroll-track" id="htrack"></div></div>
+    <div class="progress"><i id="progDot"></i></div>
+    </div>
+  </div>
+  <div class="end-block reveal"><div class="orange-pill" style="top:10px;left:38%">The plot thickens</div><div class="orange-pill" style="top:70px;right:10%">Very convenient</div><h3>WE COULD KEEP<br>GOING, BUT THERE'S A<br>WHOLE PAGE FOR THAT.</h3><button class="btn-talk" style="margin-top:18px" onclick="showView('work')">See all projects <i>↗</i></button><span class="orange-pill" style="position:relative;margin-left:12px">There's more</span></div>
+
+  <section class="section" id="servicesSec">
+    <div class="label orange">OUR SERVICES</div><h2 style="font-size:clamp(48px,9vw,120px);margin:8px 0 10px">THIS IS OUR THING</h2>
+    <div style="position:relative"><svg id="svcLine" viewBox="0 0 120 1400" preserveAspectRatio="none" aria-hidden="true"><path id="svcPath" d="M60,0 C110,120 10,240 60,380 C110,520 10,640 60,780 C110,920 10,1040 60,1180 C85,1250 40,1330 60,1400" fill="none" stroke="#FF4D00" stroke-width="7" stroke-linecap="round"/></svg>
+    <div id="servicesList" style="position:relative;padding-left:10px"></div></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:10px"><span style="width:16px;height:16px;background:var(--orange);border-radius:50%;display:block"></span></div>
+  </section>
+
+  <div class="testi-outer" id="testiOuter">
+   <div class="testi-pin">
+   <section class="testi" id="testiSec">
+    <div class="label" style="color:#FFE9D6">TESTIMONIALS</div><h2>APPARENTLY,<br>THEY LIKE US</h2>
+    <div class="stack" id="stack"></div>
+    <div class="tnav" style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center"><button onclick="prevT()" style="border-radius:999px;border:none;padding:12px 18px;font-weight:800;background:#111;color:#fff">← Prev</button><button onclick="nextT()" style="border-radius:999px;border:none;padding:12px 18px;font-weight:800;background:#fff;color:#111">Next testimonial →</button></div>
+    <div style="text-align:center;margin-top:14px;font-size:11px;font-weight:700;letter-spacing:.16em;opacity:.75">KEEP SCROLLING — THE CARDS FLIP HERE ↓</div>
+    <div class="ticks" id="ticks"></div>
+   </section>
+   </div>
+  </div>
+
+  <section class="section">
+    <div class="label orange">FREQUENTLY ASKED QUESTIONS</div><h2 style="font-size:clamp(48px,8vw,96px);margin:8px 0">THINGS YOU<br>MIGHT ASK</h2>
+    <div class="faq-grid">
+      <div><div style="background:#fff;border-radius:20px;padding:22px;text-align:center;border:2px solid #111"><div style="font-weight:800;letter-spacing:.2em">ZZZZ</div><div class="faq-cat" style="font-size:92px;line-height:1.1">🐱</div><div style="width:54px;height:54px;background:var(--orange);color:#fff;border-radius:50%;display:grid;place-items:center;margin:12px auto;font-size:26px;box-shadow:4px 4px 0 #111">↓</div></div></div>
+      <div id="faqList"></div>
+    </div>
+  </section>
+</div>
+
+<!-- WORK VIEW -->
+<div id="view-work" class="view">
+  <div class="page-hero"><div class="black-pill" style="position:relative;display:inline-block;transform:rotate(-3deg)">Just a few</div> <div class="black-pill" style="position:relative;display:inline-block;transform:rotate(2deg);margin-left:8px">Kind of proud</div><h1>A FEW PROJECTS<br>TO BRAG ABOUT</h1><p style="color:var(--orange);font-weight:600;font-size:18px;line-height:1.5;max-width:560px;margin-left:auto">A selection of brands, identities, websites and other things we've helped bring to life. Different clients, different challenges, same obsession with making things look good and work even better.</p><div style="font-size:56px">📦🐱</div></div>
+  <div class="grid3" id="workGrid"></div>
+</div>
+
+<!-- ABOUT VIEW -->
+<div id="view-about" class="view">
+  <div class="page-hero"><h1>SMALL STUDIO,<br>BIG BRAND ENERGY</h1><div style="display:flex;gap:8px;margin:12px 0"><span class="black-pill" style="position:relative">design studio</span><span class="black-pill" style="position:relative">Independent</span></div><p style="color:var(--orange);font-weight:600;font-size:18px;line-height:1.5;max-width:620px;margin-left:auto">Founded in Bucharest by Bogdan and Diana Apalaghiei, Two26 brings together years of experience across advertising, branding and digital.</p></div>
+  <section class="section" style="padding-top:10px">
+    <h3 class="cond" style="font-size:36px">HOW WE STARTED</h3><p style="font-size:20px;font-weight:700">Two '90s kids, one shared itch to make better brands.</p><p style="line-height:1.7;max-width:760px">After years working for others, we changed course in early 2024 and decided to put all that experience into a dream of our own. What started with some recommendations and a few familiar faces quickly grew into something of its own. A studio where we could question the brief, really look into the details and make the kind of work that makes us smile.</p>
+    <h3 class="cond" style="font-size:36px;margin-top:36px">NOW WE'RE HERE</h3><p style="font-size:20px;font-weight:700">Less size, more scope</p><p style="line-height:1.7;max-width:760px">We have grown, but not into a maze of departments. Instead, Two26 is a three-person core team, supported by top notch collaborators whenever a project demands it. It means we can stay involved, move quickly and build the right team around each situation. We do not chase work for the sake of filling a portfolio. We like projects with a real challenge and people who care about getting it right.</p>
+    <h3 class="cond" style="font-size:36px;margin-top:36px">THE TEAM — THIS IS PRETTY MUCH EVERYONE</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:14px"><div style="background:#fff;border-radius:18px;padding:18px"><b>Bogdan Apalaghiei</b><div style="color:var(--orange);font-size:12px;letter-spacing:.12em;font-weight:800;margin-top:4px">CREATIVE PARTNER</div></div><div style="background:#fff;border-radius:18px;padding:18px"><b>Diana Apalaghiei</b><div style="color:var(--orange);font-size:12px;letter-spacing:.12em;font-weight:800;margin-top:4px">CREATIVE PARTNER</div></div><div style="background:#fff;border-radius:18px;padding:18px"><b>Andreea Liche</b><div style="color:var(--orange);font-size:12px;letter-spacing:.12em;font-weight:800;margin-top:4px">JR. DESIGNER</div></div></div>
+    <h3 class="cond" style="font-size:32px;margin-top:36px">THE OFFICE RULES</h3>
+    <div class="rules" style="margin-top:14px"><div class="rule"><b>01</b><h4>THE BRIEF IS NOT SET IN STONE</h4><p>A brief is a starting point, not a set of commandments. We'll challenge it if we think there's a better way to get where we need to go.</p></div><div class="rule"><b>02</b><h4>GOOD IDEAS NEED SPACE</h4><p>We don't believe in rushing to the first solution that kind of works. Give an idea enough room to breathe, and it might just be the one.</p></div><div class="rule"><b>03</b><h4>PRETTY IS NOT A STRATEGY</h4><p>We love beautiful things. But looking good is only part of the job. First, we search for meaning. Everything we put out there needs to have a reason to be.</p></div><div class="rule"><b>04</b><h4>IF IT CAN BE SIMPLE, SIMPLIFY</h4><p>Complexity for complexity's sake is not cool, actually. And people's attention span is at an ATL. If your brand can say more with less, we'll make it happen.</p></div></div>
+    <h3 class="cond" style="font-size:32px;margin-top:36px">CAPABILITIES — WE'VE GOT RANGE</h3><div class="chips" id="caps" style="margin-top:12px"></div>
+  </section>
+</div>
+
+<!-- PROJECT DETAIL -->
+<div id="view-project" class="view">
+  <div style="padding:96px 18px 0;max-width:1100px;margin:0 auto"><button class="pill-nav" onclick="showView('work')">‹ Back to our work</button> <button class="btn-talk" onclick="openOverlay()" style="float:right">Let's Talk <i>↗</i></button></div>
+  <div style="background:#A8E6D8;margin:18px;border-radius:24px;padding:28px;position:relative;overflow:hidden;min-height:340px"><div style="font-size:96px">🐉</div><h1 style="font-size:clamp(56px,10vw,110px);color:#FFF8EE;margin:10px 0 0;text-shadow:2px 2px 0 rgba(0,0,0,.1)">HEYGLUCO</h1><p style="font-weight:700">Health &amp; Wellness</p></div>
+  <section class="section" style="padding-top:10px"><h3 class="cond" style="font-size:28px">The Context</h3><p style="line-height:1.7">HeyGluco was born from a family's own experience with type 1 diabetes. After their daughter Ecaterina was diagnosed at seven, they found themselves navigating a new reality filled with medical information, calculations, uncertainty and a lot of fear. What they needed most in those first months wasn't more information, but a clearer, more human way to make sense of it. They decided to create the resource they wished they had from day one: a place where families could learn, find practical tools and feel supported by people who had already been through the same experience. Our challenge was to turn that deeply personal idea into a brand that could talk about a serious subject with clarity and empathy, without feeling clinical or intimidating. Project year - 2026</p><h3 class="cond" style="font-size:28px;margin-top:24px">The Solution</h3><p style="line-height:1.7">We built HeyGluco around the idea of making diabetes easier to understand and less frightening, especially for children. At the centre of the identity is Gluco, a small dragon designed as a familiar companion through a world of sensors, insulin, glucose levels and new routines. Every detail has a purpose. His three coloured spikes reference glucose levels, while the scarf is inspired by the international symbol of diabetes. Around him, we created a cast of characters based on everyday diabetes tools, turning unfamiliar medical objects into something children can recognise and relate to. A second, more narrative illustration style helps tell the family's real story with more emotion and nuance. A warm, colourful palette moves away from the cold visual codes of healthcare, while typography and a clear editorial system make complex information easier to navigate. Together, they give HeyGluco a visual language that can educate without overwhelming and support without talking down.</p><div class="chips"><span class="chip">Illustration</span><span class="chip">Brand Strategy</span><span class="chip">Animation</span><span class="chip">Visual Identity</span></div></section>
+</div>
+
+<footer>
+  <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;justify-content:space-between"><h2>Okay, that's<br>enough<br>website</h2><button class="btn-talk" onclick="openOverlay()" style="background:#111">Let's Talk <i>↗</i></button></div>
+  <div class="foot-grid"><div><div class="label" style="color:#FFE9D6">Email us</div><a href="mailto:bogdan@two26.studio?subject=Hey%20Two26!" style="letter-spacing:.08em;font-weight:700">b o g d a n @ t w o 2 6 . s t u d i o</a><p style="opacity:.85;line-height:1.5;font-size:14px">Boutique design studio<br>Bucharest, Romania</p></div><div><div class="label" style="color:#FFE9D6">Main Menu</div><a href="#" onclick="showView('work');return false">Work ↗</a><a href="#" onclick="showView('about');return false">About us ↗</a><a href="#" onclick="showView('home');return false">Home ↗</a></div><div><div class="label" style="color:#FFE9D6">Socials</div><a href="https://www.instagram.com/two26_studio/" target="_blank" rel="noopener">Instagram ↗</a><a href="#" onclick="return false">Behance ↗</a><a href="https://www.linkedin.com/company/two26-studio/" target="_blank" rel="noopener">LinkedIn ↗</a></div><div><div class="label" style="color:#FFE9D6">Studio</div><p style="margin:6px 0;line-height:1.6;font-size:14px">Monday–Friday<br>10:00 – 17:00<br><br>Handmade by humans.<br>Well, digitally</p></div></div>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;border-top:1px solid rgba(255,255,255,.25);padding:16px 0 6px;margin-top:20px;font-size:13px"><span>© Copyright 2026 - Two26 Studio</span><span>Handmade by humans. / Well, digitally</span><span>Bucharest, / Romania</span></div>
+  <div class="giant">TWO26</div>
+</footer>
+
+<div id="overlay"><div style="display:flex;justify-content:space-between;align-items:center"><div style="font-family:Anton,sans-serif;font-size:28px">TWO 26</div><button onclick="closeOverlay()" style="background:#FFF6EC;border:none;border-radius:999px;padding:10px 18px;font-weight:800">Close ×</button></div><h2><span>WANT TO</span><span>START</span><span>A NEW</span><span>PROJECT?</span></h2><p style="color:#FFD9B8;font-size:20px;font-weight:600">or just say hello!</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:700px;margin-top:30px"><div><div class="label" style="color:#FFD9B8">INQUIRIES &amp; COMMISSIONS</div><a href="mailto:bogdan@two26.studio" style="font-size:20px;font-weight:800;display:block;margin-top:8px">bogdan@two26.studio</a></div><div><div class="label" style="color:#FFD9B8">JOB APPLICATIONS</div><a href="mailto:diana@two26.studio" style="font-size:20px;font-weight:800;display:block;margin-top:8px">diana@two26.studio</a></div></div><div style="margin-top:50px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px"><div style="display:flex;gap:8px"><a href="https://www.instagram.com/two26_studio/" target="_blank" rel="noopener" style="border:1.5px solid #FFF6EC;border-radius:999px;padding:10px 16px;font-weight:700">Instagram</a><a href="https://www.linkedin.com/company/two26-studio/" target="_blank" rel="noopener" style="border:1.5px solid #FFF6EC;border-radius:999px;padding:10px 16px;font-weight:700">Linkedin</a></div><div style="background:#fff;color:#111;border-radius:16px 16px 0 0;padding:16px 18px;text-align:center;transform:translateY(20px)"><div style="font-size:28px"><span class="wave-hand">✋</span></div><div style="font-family:Anton,sans-serif;color:var(--orange);font-size:22px">LET'S TALK ☺</div><div style="font-size:12px;opacity:.6">hand rising from below</div></div></div></div>
+
+<a class="vasux" href="https://vasux.in" target="_blank" rel="noopener"><span></span> Crafted by vasux.in ↗</a>
+
+<script>
+const projects=[
+{n:"HEYGLUCO",c:"HEALTH & WELLNESS",bg:"linear-gradient(135deg,#7EDDD0,#2AA198)",label:"HEYGLUCO",emoji:"🐉",id:"heygluco"},
+{n:"THE BAGEL BAR",c:"FOOD & BEVERAGE",bg:"linear-gradient(135deg,#FF8A3D,#FF4D00)",label:"The BAGEL BAR",emoji:"🥯"},
+{n:"TANTI MARIA",c:"FOOD & RETAIL",bg:"repeating-linear-gradient(45deg,#FF3B30 0 28px,#FF9500 28px 56px)",label:"TANTI MARIA",emoji:"◆"},
+{n:"MUNCHIES AND CREAM",c:"FOOD & BEVERAGE",bg:"linear-gradient(135deg,#FF9DE2,#B28DFF)",label:"MUNCHIES",emoji:"🍦"},
+{n:"MVP",c:"SPORTS & TALENT MANAGEMENT",bg:"linear-gradient(135deg,#4DA6FF,#0066FF)",label:"MVP",emoji:"🧢"},
+{n:"YUM YUM",c:"FOOD & BEVERAGE",bg:"linear-gradient(135deg,#111,#333)",label:"YUM YUM",emoji:"🫐"},
+{n:"LP ONE",c:"AUTOMOTIVE & MOTORSPORT",bg:"linear-gradient(135deg,#111,#444)",label:"LP1",emoji:"🏎️"},
+{n:"MERCI",c:"FOOD & BEVERAGE",bg:"linear-gradient(135deg,#8B5A2B,#D9A066)",label:"merci",emoji:"🍰"},
+];
+function cardHTML(p,clickable){return `<article class="card"><div class="card-img" style="background:${p.bg};color:#fff"><div style="text-align:center"><div style="font-size:72px;line-height:1">${p.emoji}</div><b style="font-size:34px">${p.label}</b></div></div><div class="card-body"><div><h3>${p.n}</h3><p>${p.c}</p></div><div class="arrow" ${clickable&&p.id?`onclick="showView('project')" style="cursor:pointer"`:''}>↗</div></div></article>`}
+document.getElementById('htrack').innerHTML=projects.slice(0,6).map(p=>cardHTML(p,true)).join('');
+document.getElementById('workGrid').innerHTML=projects.map(p=>cardHTML(p,true)).join('');
+// marquee
+const phrase="LET'S MAKE IT MAKE SENSE • GOOD LOOKS INCLUDED • ";
+document.getElementById('marquee').innerHTML=`<span>${phrase.repeat(6)}</span><span>${phrase.repeat(6)}</span>`;
+// about split
+const at=document.getElementById('aboutText'); const words=at.textContent.trim().split(/\s+/); at.innerHTML=words.map(w=>`<span class="w">${w}</span>`).join(' ');
+// services
+const services=[
+["BRAND STRATEGY","We find the idea, the angle and the reasons people should care.","✏️"],
+["BRAND IDENTITY","We give your brand a distinctive look, feel and personality that feel unmistakably yours.","🧊"],
+["WEB DESIGN","We turn your brand into a digital experience that looks great, feels right and is easy to navigate.","🌐"],
+["ILLUSTRATION","We create distinctive illustrations that add character to your brand.","☀️"],
+["MOTION DESIGN","We make your brand move, cause standing still just isn't enough.","🎬"],
+["PACKAGING DESIGN","We create packaging that catches the eye and works better for your brand.","📦"],
+["ART DIRECTION","We keep all the moving parts moving in the same direction, from the big idea down to the smallest detail.","👁️"],
+];
+document.getElementById('servicesList').innerHTML=services.map((s,i)=>`<div class="svc"><h3>${s[0]} <span class="svc-icon">${s[2]}</span></h3><div><span class="svc-bubble">${s[1]}</span></div></div>`).join('');
+// testimonials
+const testis=[
+["Working with Bogdan and Diana has been one of the smoothest collaborations I've had","Ruxandra Florescu, COO, Dare Digital","They're sharp, always responsive, and have a real talent for turning briefs into compelling visuals. No matter the challenge: tight deadlines, shifting requirements, tricky creative constraints, they always show up with solutions. Highly recommend working with them!","RF"],
+["Bogdan and Diana truly brought HeyGluco to life","Luiza Zamfirescu, Co-Founder, HeyGluco","Both of them are truly amazing humans, with an incredible amount of creativity and talent. They took our vision, understood it completely, and brought it to life in ways that went beyond anything we could have imagined. We absolutely loved working with them and feel incredibly lucky that, along the way, we got to call them friends. We cannot brag about them or recommend them highly enough. They are the kind of people you feel lucky to have found, and luckier to have worked with! ❤️","LZ"],
+["Working with Two26 is a bit like brainstorming ideas with your best friends","Vlad Belcin, Sr. Copywriter, Dare Digital","Always fun, always insightful, always constructive. It hardly feels like working, cause the whole process is always so smooth. That's what you get for getting the job done with cool creatives, I guess.","VB"],
+["Four projects and counting","Ionut Belet, Founder, MVP Agency","We've worked together on two websites and two visual identities so far, and it's been a pleasure every time. Great ideas, really well executed, and just lovely people to work with. Pretty sure we're not done yet.","IB"],
+["Better than we imagined","Monica Tantu, Co-Founder, Merci","Working with Two26 on our brand identity was a great experience from start to finish. They're incredibly creative and thoughtful, but also easy to work with and genuinely invested in getting things right. They brought ideas we wouldn't have thought of ourselves and gave the brand a personality that really feels like us. You can tell they care about the work, but also about the people behind it.","MT"],
+];
+// testimonials: pinned full-screen — page scroll drives the card fan
+const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let tIdx=0, tPos=0;
+const stackEl=document.getElementById('stack');
+stackEl.innerHTML=testis.map((t,i)=>`<div class="tcard"><div style="display:flex;gap:12px;align-items:center"><div class="avatar">${t[3]}</div><div><b>${t[1]}</b><div style="font-size:12px;opacity:.6">Testimonial ${i+1} / 5</div></div></div><h4>“${t[0]}”</h4><p>${t[2]}</p></div>`).join('');
+const tCards=stackEl.querySelectorAll('.tcard');
+function renderTicks(){document.getElementById('ticks').innerHTML=testis.map((_,i)=>`<i class="${i===tIdx?'on':''}"></i>`).join('')}
+function setTestiPos(pos){
+ tPos=Math.max(0,Math.min(testis.length-1,pos));
+ tCards.forEach((card,i)=>{
+  const off=i-tPos; let tr,op,z;
+  if(off<0){tr=`translateY(${(off*115).toFixed(1)}%) rotate(${(off*7).toFixed(2)}deg)`; op=Math.max(0,1+off*1.5); z=30+Math.round(off)}
+  else{tr=`translateY(${(off*14).toFixed(1)}px) rotate(${(off*4).toFixed(2)}deg) scale(${(1-off*.05).toFixed(3)})`; op=off>2.4?0:1; z=10-Math.round(off)}
+  card.style.transform=tr; card.style.opacity=op; card.style.zIndex=z; card.style.pointerEvents=Math.abs(off)<.5?'auto':'none';
+ });
+ const idx=Math.round(tPos); if(idx!==tIdx){tIdx=idx; renderTicks()}
+}
+function goT(idx){
+ idx=Math.max(0,Math.min(testis.length-1,idx));
+ if(reduceMotion){setTestiPos(idx);return}
+ const outer=document.getElementById('testiOuter'); if(!outer)return;
+ const total=Math.max(1,outer.offsetHeight-window.innerHeight);
+ window.scrollTo({top:outer.offsetTop+(idx/(testis.length-1))*total,behavior:'smooth'});
+}
+function nextT(){goT(Math.round(tPos)+1)} function prevT(){goT(Math.round(tPos)-1)}
+renderTicks(); setTestiPos(0);
+// FAQ
+const faqs=[
+["What kind of projects do you take on?","Branding is our main thing, from strategy and identity to packaging, illustration, motion and web design. We like projects where there's room to think, question things and build something with a bit of character."],
+["How much does a branding project cost?","It depends on what we're making. Every project is a little different, so we price based on scope rather than pulling a mysterious number out of a hat. Tell us what you have in mind and we'll take it from there."],
+["Can you work with a brand that already exists?","Of course. Not everything needs to be burned to the ground and rebuilt. Sometimes a brand just needs a fresh pair of eyes and a few very intentional changes."],
+["Do you work with clients outside Romania?","Absolutely. We're based in Bucharest, but our Wi-Fi travels remarkably well. We're happy to work with people pretty much anywhere."],
+["What if we don't like the first concepts?","We talk about why. Feedback is part of the process, and nothing is presented just because 'we thought it looked cool.' Although we do like when things look cool."],
+["How involved do we need to be?","Involved enough. We'll need your knowledge, feedback and decisions along the way. Don't worry, we won't make you sit next to us while we move things two pixels to the left."],
+["Can you start yesterday?","We checked. Unfortunately, yesterday is fully booked. But send us a message and we'll tell you when we can realistically get started."],
+["Do you work with small businesses?","Yep. Company size matters less to us than the project, the people behind it and what we can actually do together."],
+["Do you also develop websites?","We design them. For development, we work with people we trust and can bring them into the project when needed. So yes, your website can actually become a website."],
+["What's with all the cats?","Those are Oreo and Oliver. They're not technically employed by Two26, but they've somehow made it into the brand anyway. They mostly sleep through meetings and contribute very little creatively. We keep them around."],
+];
+document.getElementById('faqList').innerHTML=faqs.map((f,i)=>`<div class="faq-item ${i===0?'open':''}"><button class="faq-q" onclick="toggleFaq(this)">${f[0]} <span>${i===0?'−':'+'}</span></button><div class="faq-a">${f[1]}<span class="badge26">26</span></div></div>`).join('');
+function setFaqHeights(){document.querySelectorAll('.faq-item').forEach(el=>{const a=el.querySelector('.faq-a');if(a)a.style.maxHeight=el.classList.contains('open')?a.scrollHeight+40+'px':'0px'})}
+function toggleFaq(btn){const item=btn.parentElement;const was=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(el=>{el.classList.remove('open');el.querySelector('.faq-q span').textContent='+'});
+ if(!was){item.classList.add('open');btn.querySelector('span').textContent='−'} setFaqHeights()}
+window.addEventListener('resize',setFaqHeights); setTimeout(setFaqHeights,300);
+// caps
+const caps=["Brand Collateral","Merchandise","Signage","Posters","Menus","Catalogues","Pitch Decks","Editorial Design","OOH","Digital Ads","Social Media Design","Key Visuals","Landing Pages","Web Design","Packaging Design","2D Animation","Motion Design","Iconography","Illustration","Art Direction","Brand Guidelines","Logo Design","Visual Identity","Brand Identity","Brand Strategy"];
+document.getElementById('caps').innerHTML=caps.map(c=>`<span class="chip">${c}</span>`).join('');
+// views
+function showView(v){document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));document.getElementById('view-'+v).classList.add('active');window.scrollTo({top:0,behavior:'instant'}); setTimeout(setFaqHeights,80)}
+function openOverlay(){document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden'}
+function closeOverlay(){const o=document.getElementById('overlay');if(!o.classList.contains('open'))return;o.classList.remove('open');o.classList.add('closing');document.body.style.overflow='';setTimeout(()=>o.classList.remove('closing'),560)}
+// ===== scroll animation engine (rAF loop) =====
+const svcPath=document.getElementById('svcPath'); let svcLen=0;
+if(svcPath){svcLen=svcPath.getTotalLength(); svcPath.style.strokeDasharray=svcLen; svcPath.style.strokeDashoffset=svcLen}
+let lastY=window.scrollY, velSkew=0;
+function clamp01(v){return Math.min(1,Math.max(0,v))}
+function updateScrollFx(){
+ const vh=window.innerHeight, y=window.scrollY, homeActive=document.getElementById('view-home').classList.contains('active');
+ // marquee bend: skew follows scroll velocity, eases back to rest
+ const vel=y-lastY; lastY=y; velSkew+= ((Math.max(-9,Math.min(9,vel*.35)))-velSkew)*.12;
+ const mw=document.querySelector('.marquee-wrap'); if(mw){mw.style.setProperty('--skew',velSkew.toFixed(2)+'deg'); mw.style.setProperty('--bend',Math.abs(velSkew*7).toFixed(0)+'px')}
+ if(homeActive){
+  // hero illustration gentle parallax
+  const ill=document.querySelector('.illustration'); if(ill&&y<vh) ill.style.transform=`translateY(${y*.07}px)`;
+  // about words colour reveal
+  const el=document.getElementById('aboutText');
+  if(el){const r=el.getBoundingClientRect(); const prog=clamp01((vh-r.top)/(vh*.85)); const spans=el.querySelectorAll('.w'); const lit=Math.floor(prog*spans.length*1.25); spans.forEach((s,i)=>{const c=i<lit-4?'on':i<lit?'mid':''; if(s.dataset.c!==c){s.dataset.c=c; s.className='w '+c}})}
+  // SELECTED WORKS: pinned horizontal scroll across the tall outer section
+  const outer=document.getElementById('worksOuter'), track=document.getElementById('htrack');
+  if(outer&&track){
+   if(reduceMotion){track.style.transform=''}
+   else{const total=Math.max(0,track.scrollWidth-window.innerWidth+44); const p=clamp01((y-outer.offsetTop)/Math.max(1,outer.offsetHeight-vh)); track.style.transform=`translateX(${(-p*total).toFixed(1)}px)`; const dot=document.getElementById('progDot'); if(dot)dot.style.left=(6+p*88)+'px';
+    // cards tilt slightly as they travel
+    track.querySelectorAll('.card').forEach((c,i)=>{c.style.rotate=Math.sin(p*6+i)*1.2+'deg'})}
+  }
+  // TESTIMONIALS: pinned full-screen — scroll progress flips the cards
+  const tOuter=document.getElementById('testiOuter');
+  if(tOuter&&!reduceMotion){const tp=clamp01((y-tOuter.offsetTop)/Math.max(1,tOuter.offsetHeight-vh)); setTestiPos(tp*(testis.length-1))}
+  // services winding line draws itself with scroll
+  const svc=document.getElementById('servicesSec');
+  if(svc&&svcPath&&svcLen){const r=svc.getBoundingClientRect(); const p=clamp01((vh*.88-r.top)/Math.max(1,r.height)); svcPath.style.strokeDashoffset=(svcLen*(1-p)).toFixed(1)}
+ }
+ requestAnimationFrame(updateScrollFx);
+}
+requestAnimationFrame(updateScrollFx);
+window.addEventListener('resize',()=>setFaqHeights());
+// ===== reveal-on-scroll for sections, services, cards, rules, chips =====
+(function(){
+ const targets=[];
+ document.querySelectorAll('#aboutSec .orange-pill').forEach((el,i)=>{el.classList.add('reveal-pop'); el.style.setProperty('--rot',(i%2?3:-3)+'deg'); targets.push(el)});
+ document.querySelectorAll('.section>.label,.section>h2,.works-head,.testi h2,.faq-grid>div,footer h2,.foot-grid>div,.page-hero,.end-block').forEach(el=>{el.classList.add('reveal'); targets.push(el)});
+ document.querySelectorAll('.svc,.card,.rule,.chip').forEach(el=>targets.push(el));
+ document.querySelectorAll('.testi,footer').forEach(el=>targets.push(el));
+ const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in'); io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+ targets.forEach(el=>io.observe(el));
+})();
+// hero mouse parallax (fine pointers only)
+if(window.matchMedia('(pointer:fine)').matches&&!reduceMotion){
+ const hero=document.querySelector('.hero');
+ hero.addEventListener('mousemove',e=>{const cx=(e.clientX/window.innerWidth-.5), cy=(e.clientY/window.innerHeight-.5);
+  hero.querySelectorAll('.loop-svg').forEach((s,i)=>{s.style.translate=`${cx*(i?18:-14)}px ${cy*12}px`});
+  hero.querySelectorAll('.black-pill').forEach((p,i)=>{p.style.translate=`${cx*(8+i*5)}px ${cy*6}px`})});
+}
+// preloader + hero parallax
+window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('preloader').classList.add('hide'),1400); setFaqHeights()});
+setTimeout(()=>document.getElementById('preloader').classList.add('hide'),2600);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay()});
+</script>
+</body>
+</html>
