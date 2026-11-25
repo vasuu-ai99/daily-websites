@@ -179,18 +179,8 @@
                 </g>
                 <path d="M0 372 Q 320 300 640 372 L640 440 L0 440 Z" fill="url(#earthGlow)"/>
                 <path d="M0 372 Q 320 300 640 372" fill="none" stroke="#bfe2ff" stroke-width="3" opacity="0.8"/>
-                <g transform="translate(320 205) rotate(-14)">
-                  <ellipse cx="0" cy="52" rx="34" ry="40" fill="#eef1f6"/>
-                  <path d="M-34 30 Q0 12 34 30 L34 62 Q0 78 -34 62 Z" fill="#d7dce6"/>
-                  <rect x="-14" y="34" width="28" height="20" rx="5" fill="#2438FF"/>
-                  <circle cx="0" cy="-16" r="34" fill="#f4f6fa"/>
-                  <circle cx="0" cy="-16" r="27" fill="url(#visor)"/>
-                  <path d="M-52 6 Q-70 34 -58 62 L-42 56 Q-50 32 -38 12 Z" fill="#e4e9f1"/>
-                  <path d="M52 6 Q72 -16 62 -40 L46 -32 Q52 -14 38 4 Z" fill="#e4e9f1"/>
-                  <path d="M-20 88 L-30 128 L-14 132 L-4 94 Z" fill="#e4e9f1"/>
-                  <path d="M20 88 L34 124 L50 118 L32 90 Z" fill="#e4e9f1"/>
-                </g>
               </svg>
+              <img class="tablet-astro" src="assets/img/astronaut.png" alt="Astronaut floating in space above Earth's horizon" />
             </div>
           </div>
           <div class="immersive-copy reveal">
@@ -205,24 +195,14 @@
         <div class="cta-stage">
           <canvas id="ctaCanvas"></canvas>
 
-          <!-- Astronaut (SVG, moves through the scenes) -->
+          <!-- Astronaut (real PNG, moves through the scenes) -->
           <div class="cta-astro" id="ctaAstro" aria-hidden="true">
-            <svg viewBox="0 0 200 220">
-              <defs>
-                <linearGradient id="visor2" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#ffe082"/><stop offset="0.5" stop-color="#f59b23"/><stop offset="1" stop-color="#7a3f0e"/>
-                </linearGradient>
-              </defs>
-              <ellipse cx="100" cy="128" rx="46" ry="54" fill="#eef1f6"/>
-              <path d="M54 104 Q100 84 146 104 L146 140 Q100 158 54 140 Z" fill="#d3d9e4"/>
-              <rect x="82" y="106" width="36" height="26" rx="6" fill="#2438FF"/>
-              <circle cx="100" cy="62" r="44" fill="#f6f8fb"/>
-              <circle cx="100" cy="62" r="35" fill="url(#visor2)"/>
-              <path d="M34 84 Q8 116 22 150 L44 140 Q34 112 50 92 Z" fill="#e2e8f1"/>
-              <path d="M166 84 Q196 52 184 16 L160 26 Q168 56 150 80 Z" fill="#e2e8f1"/>
-              <path d="M74 176 L60 214 L82 218 L92 182 Z" fill="#e2e8f1"/>
-              <path d="M126 176 L144 210 L164 202 L142 172 Z" fill="#e2e8f1"/>
-            </svg>
+            <img class="astro-img" src="assets/img/astronaut.png" alt="" />
+          </div>
+
+          <!-- Second astronaut (same real PNG, passes close at bottom-right during the tunnel) -->
+          <div class="cta-astro2" id="ctaAstro2" aria-hidden="true">
+            <img src="assets/img/astronaut.png" alt="" />
           </div>
 
           <!-- Giant sweeping headline -->
@@ -231,16 +211,16 @@
 
           <!-- Sticker world -->
           <div class="sticker-world" id="stickerWorld" aria-hidden="true">
-            <span class="sticker st-heart"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-10-9.3C.4 8.6 2.3 5 5.7 5c2 0 3.4 1.1 4.3 2.4h4c.9-1.3 2.3-2.4 4.3-2.4 3.4 0 5.3 3.6 3.7 6.7C19.5 16.1 12 21 12 21z" fill="#ff3b30" transform="scale(0.92) translate(1 1)"/></svg></span>
-            <span class="sticker st-popsicle"><svg viewBox="0 0 24 24"><rect x="11" y="14" width="2.6" height="7" rx="1.3" fill="#d99a4e"/><path d="M7 3.5C7 2.1 8.1 1 9.5 1h5C15.9 1 17 2.1 17 3.5V14a5 5 0 0 1-10 0z" fill="#ff5d73"/><path d="M7 8h10v3H7z" fill="#ffd166"/></svg></span>
-            <span class="sticker st-pizza"><svg viewBox="0 0 24 24"><path d="M3 4c6 1.2 12 1.2 18 0L12 21z" fill="#ffcf5c"/><path d="M3 4c6 1.2 12 1.2 18 0l-.7 2.6C14.4 7.7 9.6 7.7 3.7 6.6z" fill="#e08a3c"/><circle cx="10" cy="9" r="1.7" fill="#e23b3b"/><circle cx="14.5" cy="12.5" r="1.7" fill="#e23b3b"/><circle cx="11.5" cy="15.5" r="1.4" fill="#3fae5a"/></svg></span>
-            <span class="sticker st-bolt"><svg viewBox="0 0 24 24"><path d="M13 1 4.5 13.5H11L9.8 23 19 10h-6.5z" fill="#ffd60a" stroke="#e0a800" stroke-width="0.8"/></svg></span>
-            <span class="sticker st-mushroom"><svg viewBox="0 0 24 24"><path d="M2.5 11a9.5 8 0 0 1 19 0z" fill="#e63946"/><circle cx="8" cy="7.5" r="1.6" fill="#fff"/><circle cx="15.5" cy="6.5" r="1.3" fill="#fff"/><path d="M9 11h6l1 9a2.5 2.5 0 0 1-2.5 2.8h-3A2.5 2.5 0 0 1 8 20z" fill="#ffe8d6"/></svg></span>
-            <span class="sticker st-smiley"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ffd60a"/><circle cx="8.5" cy="10" r="1.6" fill="#221f1a"/><circle cx="15.5" cy="10" r="1.6" fill="#221f1a"/><path d="M6.5 14.5c1.6 2.3 3.4 3.4 5.5 3.4s3.9-1.1 5.5-3.4" fill="none" stroke="#221f1a" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-            <span class="sticker st-monster"><svg viewBox="0 0 24 24"><path d="M5 20V11a7 7 0 0 1 14 0v9h-4.5v-4h-5v4z" fill="#34c759"/><circle cx="12" cy="10.5" r="3" fill="#fff"/><circle cx="12" cy="10.5" r="1.5" fill="#221f1a"/><path d="M7 4l2 3M17 4l-2 3" stroke="#34c759" stroke-width="2" stroke-linecap="round"/></svg></span>
-            <span class="sticker st-planet"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5" fill="#3ae0e6"/><ellipse cx="12" cy="12" rx="11" ry="3.4" fill="none" stroke="#ff8fab" stroke-width="2" transform="rotate(-16 12 12)"/></svg></span>
-            <span class="sticker st-crystal"><svg viewBox="0 0 24 24"><path d="M12 1 19 9l-7 14L5 9z" fill="#b388ff"/><path d="M5 9h14M12 1 9 9l3 14M12 1l3 8-3 14" fill="none" stroke="#7c4dff" stroke-width="0.9"/></svg></span>
-            <span class="sticker st-eye"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="#fff"/><circle cx="12" cy="12" r="4" fill="#2438FF"/><circle cx="12" cy="12" r="1.8" fill="#0a0a0a"/><path d="M8 19c.8 1.6 2 2.4 4 2.4" stroke="#ff5d8f" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></span>
+            <span class="sticker st-heart" style="--bobDur:3.1s;--bobAmp:-18px"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-10-9.3C.4 8.6 2.3 5 5.7 5c2 0 3.4 1.1 4.3 2.4h4c.9-1.3 2.3-2.4 4.3-2.4 3.4 0 5.3 3.6 3.7 6.7C19.5 16.1 12 21 12 21z" fill="#ff3b30" transform="scale(0.92) translate(1 1)"/></svg></span>
+            <span class="sticker st-popsicle" style="--bobDur:2.7s;--bobAmp:-12px"><svg viewBox="0 0 24 24"><rect x="11" y="14" width="2.6" height="7" rx="1.3" fill="#d99a4e"/><path d="M7 3.5C7 2.1 8.1 1 9.5 1h5C15.9 1 17 2.1 17 3.5V14a5 5 0 0 1-10 0z" fill="#ff5d73"/><path d="M7 8h10v3H7z" fill="#ffd166"/></svg></span>
+            <span class="sticker st-pizza" style="--bobDur:3.8s;--bobAmp:-20px"><svg viewBox="0 0 24 24"><path d="M3 4c6 1.2 12 1.2 18 0L12 21z" fill="#ffcf5c"/><path d="M3 4c6 1.2 12 1.2 18 0l-.7 2.6C14.4 7.7 9.6 7.7 3.7 6.6z" fill="#e08a3c"/><circle cx="10" cy="9" r="1.7" fill="#e23b3b"/><circle cx="14.5" cy="12.5" r="1.7" fill="#e23b3b"/><circle cx="11.5" cy="15.5" r="1.4" fill="#3fae5a"/></svg></span>
+            <span class="sticker st-bolt" style="--bobDur:2.4s;--bobAmp:-10px"><svg viewBox="0 0 24 24"><path d="M13 1 4.5 13.5H11L9.8 23 19 10h-6.5z" fill="#ffd60a" stroke="#e0a800" stroke-width="0.8"/></svg></span>
+            <span class="sticker st-mushroom" style="--bobDur:3.4s;--bobAmp:-15px"><svg viewBox="0 0 24 24"><path d="M2.5 11a9.5 8 0 0 1 19 0z" fill="#e63946"/><circle cx="8" cy="7.5" r="1.6" fill="#fff"/><circle cx="15.5" cy="6.5" r="1.3" fill="#fff"/><path d="M9 11h6l1 9a2.5 2.5 0 0 1-2.5 2.8h-3A2.5 2.5 0 0 1 8 20z" fill="#ffe8d6"/></svg></span>
+            <span class="sticker st-smiley" style="--bobDur:2.9s;--bobAmp:-17px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ffd60a"/><circle cx="8.5" cy="10" r="1.6" fill="#221f1a"/><circle cx="15.5" cy="10" r="1.6" fill="#221f1a"/><path d="M6.5 14.5c1.6 2.3 3.4 3.4 5.5 3.4s3.9-1.1 5.5-3.4" fill="none" stroke="#221f1a" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            <span class="sticker st-monster" style="--bobDur:4.1s;--bobAmp:-13px"><svg viewBox="0 0 24 24"><path d="M5 20V11a7 7 0 0 1 14 0v9h-4.5v-4h-5v4z" fill="#34c759"/><circle cx="12" cy="10.5" r="3" fill="#fff"/><circle cx="12" cy="10.5" r="1.5" fill="#221f1a"/><path d="M7 4l2 3M17 4l-2 3" stroke="#34c759" stroke-width="2" stroke-linecap="round"/></svg></span>
+            <span class="sticker st-planet" style="--bobDur:3.6s;--bobAmp:-19px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5" fill="#3ae0e6"/><ellipse cx="12" cy="12" rx="11" ry="3.4" fill="none" stroke="#ff8fab" stroke-width="2" transform="rotate(-16 12 12)"/></svg></span>
+            <span class="sticker st-crystal" style="--bobDur:2.6s;--bobAmp:-11px"><svg viewBox="0 0 24 24"><path d="M12 1 19 9l-7 14L5 9z" fill="#b388ff"/><path d="M5 9h14M12 1 9 9l3 14M12 1l3 8-3 14" fill="none" stroke="#7c4dff" stroke-width="0.9"/></svg></span>
+            <span class="sticker st-eye" style="--bobDur:3.3s;--bobAmp:-16px"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="#fff"/><circle cx="12" cy="12" r="4" fill="#2438FF"/><circle cx="12" cy="12" r="1.8" fill="#0a0a0a"/><path d="M8 19c.8 1.6 2 2.4 4 2.4" stroke="#ff5d8f" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></span>
           </div>
 
           <!-- Final CTA copy -->

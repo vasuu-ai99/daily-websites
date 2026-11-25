@@ -479,10 +479,16 @@
     var section = $("#ctaScroll"), cv = $("#ctaCanvas");
     if (!section || !cv) return;
     var ctx = cv.getContext("2d");
-    var giant = $("#ctaGiant"), astro = $("#ctaAstro"), stickers = $("#stickerWorld"),
+    var giant = $("#ctaGiant"), astro = $("#ctaAstro"), astro2 = $("#ctaAstro2"), stickers = $("#stickerWorld"),
         finalBox = $("#ctaFinal"), cont = $("#ctaContinue"), fill = $("#ctaProgressFill");
+    var stickerEls = stickers ? $$(".sticker", stickers) : [];
+    var easeOutBack = function (x) { var c = 1.70158, u = x - 1; return 1 + (c + 1) * u * u * u + c * u * u; };
     var stars = [];
     for (var i = 0; i < 190; i++) stars.push({ x: Math.random(), y: Math.random(), r: Math.random() * 1.7 + 0.4, tw: Math.random() * 6.28 });
+    var dust = [];
+    for (var di = 0; di < 90; di++) dust.push({ a: Math.random() * 6.2832, off: Math.random(), sp: 0.5 + Math.random() * 0.9, s: Math.random() * 2.2 + 0.6, hue: Math.floor(Math.random() * 360) });
+    var streaks = [];
+    for (var si = 0; si < 70; si++) streaks.push({ a: Math.random() * 6.2832, off: Math.random(), sp: 0.6 + Math.random() * 1.1 });
     function size() {
       var r = cv.parentElement.getBoundingClientRect();
       cv.width = Math.max(2, r.width); cv.height = Math.max(2, r.height);
@@ -505,19 +511,34 @@
         giant.style.transform = "translateY(-50%) translateX(" + x + "px)";
         giant.style.opacity = p > 0.62 ? String(clamp(1 - (p - 0.62) / 0.07, 0, 1)) : "1";
       }
-      /* astronaut choreography */
+      /* astronaut choreography — forward flight through the worlds */
       if (astro) {
         var sc = 1, ax = 0, ay = 0, op = 1, rot = 0;
-        if (p < 0.14) { sc = lerp(1, 0.8, p / 0.14); }
-        else if (p < 0.32) { sc = lerp(0.8, 0.42, (p - 0.14) / 0.18); }
-        else if (p < 0.54) { sc = lerp(0.42, 0.3, (p - 0.32) / 0.22); ax = 14; ay = 8; }
+        if (p < 0.14) { sc = lerp(1, 0.82, p / 0.14); rot = Math.sin(p * 40) * 1.6; }
+        else if (p < 0.32) { sc = lerp(0.82, 0.42, (p - 0.14) / 0.18); rot = Math.sin(p * 30) * 3 - 2; ax = -3; }
+        else if (p < 0.54) { sc = lerp(0.42, 0.3, (p - 0.32) / 0.22); ax = 14; ay = 8; rot = -5 + Math.sin(p * 46) * 2; }
         else if (p < 0.66) { op = p < 0.57 ? 1 - (p - 0.54) / 0.03 : (p - 0.6) / 0.06; op = clamp(op, 0, 1); sc = 0.55; }
-        else if (p < 0.86) { sc = lerp(0.55, 1.02, (p - 0.66) / 0.2); }
-        else { sc = lerp(1.02, 1.45, (p - 0.86) / 0.14); rot = Math.sin(p * 60) * 3; }
+        else if (p < 0.86) { sc = lerp(0.55, 1.02, (p - 0.66) / 0.2); rot = Math.sin(p * 34) * 2.4; }
+        else { var wp = (p - 0.86) / 0.14; sc = lerp(1.02, 1.45, wp); rot = Math.sin(wp * 9.4) * 6.5; }
         astro.style.transform = "translate(calc(-50% + " + ax + "vw), calc(-50% + " + ay + "vh)) scale(" + sc + ") rotate(" + rot + "deg)";
         astro.style.opacity = String(op);
+        astro.classList.toggle("waving", p > 0.855);
       }
-      if (stickers) stickers.style.opacity = String(clamp((p - 0.85) / 0.08, 0, 1));
+      /* second astronaut: passes close and fast, diagonally across the bottom-right, mid-tunnel */
+      if (astro2) {
+        var t2 = clamp((p - 0.37) / 0.17, 0, 1);
+        var a2o = clamp(t2 / 0.14, 0, 1) * clamp((1 - t2) / 0.16, 0, 1);
+        astro2.style.transform = "translate(calc(-50% + " + lerp(46, -34, t2) + "vw), calc(-50% + " + lerp(30, -30, t2) + "vh)) scale(" + lerp(0.55, 1.85, t2 * t2) + ") rotate(" + lerp(-16, 9, t2) + "deg)";
+        astro2.style.opacity = String(a2o);
+      }
+      if (stickers) {
+        stickers.style.opacity = String(clamp((p - 0.84) / 0.07, 0, 1));
+        stickers.style.transform = "translateY(" + (clamp((p - 0.9) / 0.1, 0, 1) * -26) + "px)";
+        stickerEls.forEach(function (el, i) {
+          var pt = clamp((p - (0.845 + i * 0.011)) / 0.028, 0, 1);
+          el.style.setProperty("--pop", String(easeOutBack(pt).toFixed(3)));
+        });
+      }
       if (finalBox) {
         var fo = clamp((p - 0.87) / 0.08, 0, 1);
         finalBox.style.opacity = String(fo);
@@ -529,6 +550,28 @@
     updateProgress();
 
     function drawRing(cx, cy, R, alpha) {
+      /* soft chromatic halo behind the ring */
+      var halo = ctx.createRadialGradient(cx, cy, R * 0.55, cx, cy, R * 1.55);
+      halo.addColorStop(0, "rgba(255,0,120,0)");
+      halo.addColorStop(0.72, "rgba(255,140,0," + (0.22 * alpha) + ")");
+      halo.addColorStop(0.86, "rgba(60,120,255," + (0.17 * alpha) + ")");
+      halo.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = halo;
+      ctx.fillRect(cx - R * 1.55, cy - R * 1.55, R * 3.1, R * 3.1);
+      /* horizontal lens flare through the centre */
+      var fl = ctx.createLinearGradient(cx - R * 1.6, cy, cx + R * 1.6, cy);
+      fl.addColorStop(0, "rgba(0,229,255,0)");
+      fl.addColorStop(0.5, "rgba(255,255,255," + (0.55 * alpha) + ")");
+      fl.addColorStop(1, "rgba(255,0,150,0)");
+      ctx.fillStyle = fl;
+      ctx.fillRect(cx - R * 1.6, cy - Math.max(1.5, R * 0.012), R * 3.2, Math.max(3, R * 0.024));
+      /* chromatic ghost rings, slightly offset magenta / cyan */
+      ctx.lineWidth = Math.max(3, R * 0.045);
+      ctx.globalAlpha = alpha * 0.5; ctx.strokeStyle = "#ff2fb3";
+      ctx.beginPath(); ctx.arc(cx - R * 0.02, cy, R, 0, 6.2832); ctx.stroke();
+      ctx.strokeStyle = "#22d3ee";
+      ctx.beginPath(); ctx.arc(cx + R * 0.02, cy, R, 0, 6.2832); ctx.stroke();
+      ctx.globalAlpha = 1;
       if (typeof ctx.createConicGradient === "function") {
         var g = ctx.createConicGradient(0, cx, cy);
         g.addColorStop(0, "#ff004c"); g.addColorStop(0.2, "#ff8a00"); g.addColorStop(0.4, "#ffee00");
@@ -545,17 +588,30 @@
       if (!cta.visible) return;
       var W = cv.width, H = cv.height, p = cta.p, cx = W / 2, cy = H / 2;
       ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, H);
-      /* blue corridor phase background */
+      /* blue corridor: concentric white rings + glowing doorways on royal blue */
       if (p > 0.64 && p < 0.88) {
         var ca = clamp((p - 0.64) / 0.05, 0, 1) * clamp((0.88 - p) / 0.04, 0, 1);
-        ctx.fillStyle = "rgba(20,42,220," + (0.92 * ca) + ")"; ctx.fillRect(0, 0, W, H);
-        ctx.strokeStyle = "rgba(255,255,255," + (0.85 * ca) + ")";
-        for (var k = 0; k < 7; k++) {
-          var f = ((k / 7) + (t / 2600) % (1 / 7)) % 1;
-          var rw = lerp(30, W * 0.75, f * f), rh = lerp(20, H * 0.75, f * f);
-          ctx.lineWidth = 2 + f * 5;
+        ctx.fillStyle = "rgba(24,44,235," + (0.96 * ca) + ")"; ctx.fillRect(0, 0, W, H);
+        var maxR = Math.max(W, H) * 0.72;
+        for (var k = 0; k < 9; k++) {
+          var f = ((k / 9) + (t / 2400) % (1 / 9)) % 1;
+          var cr = lerp(14, maxR, f * f);
+          ctx.strokeStyle = "rgba(255,255,255," + ((0.15 + 0.85 * f) * ca) + ")";
+          ctx.lineWidth = 1.5 + f * 6;
+          ctx.beginPath(); ctx.arc(cx, cy, cr, 0, 6.2832); ctx.stroke();
+        }
+        for (var k2 = 0; k2 < 6; k2++) {
+          var f3 = ((k2 / 6) + (t / 2100) % (1 / 6)) % 1;
+          var rw = lerp(40, W * 0.85, f3 * f3), rh = lerp(28, H * 0.85, f3 * f3);
+          ctx.strokeStyle = "rgba(160,200,255," + (0.35 * ca * (0.3 + f3)) + ")";
+          ctx.lineWidth = 10 + f3 * 16;
           ctx.beginPath();
-          if (ctx.roundRect) ctx.roundRect(cx - rw / 2, cy - rh / 2, rw, rh, 26); else ctx.rect(cx - rw / 2, cy - rh / 2, rw, rh);
+          if (ctx.roundRect) ctx.roundRect(cx - rw / 2, cy - rh / 2, rw, rh, 30); else ctx.rect(cx - rw / 2, cy - rh / 2, rw, rh);
+          ctx.stroke();
+          ctx.strokeStyle = "rgba(255,255,255," + (0.9 * ca) + ")";
+          ctx.lineWidth = 2 + f3 * 5;
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(cx - rw / 2, cy - rh / 2, rw, rh, 30); else ctx.rect(cx - rw / 2, cy - rh / 2, rw, rh);
           ctx.stroke();
         }
         ctx.fillStyle = "rgba(255,255,255," + (0.9 * ca) + ")";
@@ -570,10 +626,22 @@
         ctx.beginPath(); ctx.arc(sx, sy, s.r, 0, 6.2832); ctx.fill();
       });
       ctx.globalAlpha = 1;
-      /* rainbow ring */
+      /* rainbow ring + dust burst */
       if (p > 0.12 && p < 0.36) {
         var rt = (p - 0.12) / 0.24;
-        drawRing(cx, cy, lerp(20, Math.max(W, H) * 0.52, Math.pow(rt, 0.7)), clamp(1 - Math.max(0, rt - 0.8) / 0.2, 0, 1));
+        var ringR = lerp(20, Math.max(W, H) * 0.52, Math.pow(rt, 0.7));
+        var ringA = clamp(1 - Math.max(0, rt - 0.8) / 0.2, 0, 1);
+        drawRing(cx, cy, ringR, ringA);
+        dust.forEach(function (d) {
+          var ph = (d.off + rt * 1.15 * d.sp) % 1;
+          var dr = ringR * (0.35 + ph * 1.15);
+          var da = ringA * (1 - ph) * 0.9;
+          if (da <= 0.01) return;
+          ctx.globalAlpha = da;
+          ctx.fillStyle = "hsl(" + d.hue + ", 95%, 78%)";
+          ctx.beginPath(); ctx.arc(cx + Math.cos(d.a) * dr, cy + Math.sin(d.a) * dr, d.s * (0.5 + ph), 0, 6.2832); ctx.fill();
+        });
+        ctx.globalAlpha = 1;
       }
       /* neon grid tunnel */
       if (p > 0.3 && p < 0.56) {
@@ -593,17 +661,44 @@
           ctx.lineWidth = 1 + f2 * 4;
           ctx.strokeRect(cx - rr, cy - rr * 0.66, rr * 2, rr * 1.32);
         }
+        /* warp speed-lines: stars streaking radially outward from centre */
+        ctx.lineCap = "round";
+        streaks.forEach(function (st) {
+          var sph = (st.off + (t / 900) * st.sp) % 1;
+          var sr1 = 20 + sph * sph * W * 0.62;
+          var sr2 = sr1 + 14 + sph * 90;
+          ctx.strokeStyle = "rgba(255,255,255," + (0.75 * (1 - sph * 0.4)) + ")";
+          ctx.lineWidth = 1 + sph * 2.4;
+          ctx.beginPath();
+          ctx.moveTo(cx + Math.cos(st.a) * sr1, cy + Math.sin(st.a) * sr1);
+          ctx.lineTo(cx + Math.cos(st.a) * sr2, cy + Math.sin(st.a) * sr2);
+          ctx.stroke();
+        });
         ctx.restore();
       }
       /* energy burst */
       if (p > 0.52 && p < 0.68) {
         var bt = (p - 0.52) / 0.16, bi = Math.sin(Math.min(1, bt) * Math.PI);
         var grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * 0.6);
-        grd.addColorStop(0, "rgba(255,255,255," + (0.95 * bi) + ")");
-        grd.addColorStop(0.25, "rgba(255,93,180," + (0.75 * bi) + ")");
-        grd.addColorStop(0.6, "rgba(80,120,255," + (0.4 * bi) + ")");
+        grd.addColorStop(0, "rgba(255,255,255," + (0.98 * bi) + ")");
+        grd.addColorStop(0.14, "rgba(255,190,240," + (0.9 * bi) + ")");
+        grd.addColorStop(0.3, "rgba(255,70,200," + (0.82 * bi) + ")");
+        grd.addColorStop(0.62, "rgba(80,120,255," + (0.45 * bi) + ")");
         grd.addColorStop(1, "rgba(0,0,0,0)");
         ctx.fillStyle = grd; ctx.fillRect(0, 0, W, H);
+        /* white-hot core flash at ignition */
+        if (bt < 0.22) {
+          ctx.fillStyle = "rgba(255,255,255," + ((0.22 - bt) / 0.22 * 0.85) + ")";
+          ctx.beginPath(); ctx.arc(cx, cy, Math.max(10, Math.max(W, H) * 0.16 * (1 - bt * 2)), 0, 6.2832); ctx.fill();
+        }
+        /* expanding shockwave rings (pink, then blue) */
+        for (var sw = 0; sw < 2; sw++) {
+          var swt = clamp(bt * 1.3 - sw * 0.22, 0, 1);
+          if (swt <= 0 || swt >= 1) continue;
+          ctx.strokeStyle = sw ? "rgba(120,170,255," + (0.8 * (1 - swt) * bi) + ")" : "rgba(255,120,220," + (0.9 * (1 - swt) * bi) + ")";
+          ctx.lineWidth = 10 * (1 - swt) + 1.5;
+          ctx.beginPath(); ctx.arc(cx, cy, swt * Math.max(W, H) * 0.55, 0, 6.2832); ctx.stroke();
+        }
         ctx.save(); ctx.translate(cx, cy); ctx.rotate(t / 2400);
         ctx.fillStyle = "rgba(255,255,255," + (0.5 * bi) + ")";
         for (var r2 = 0; r2 < 12; r2++) { ctx.rotate(6.2832 / 12); ctx.fillRect(0, -2, W * 0.5 * bi, 4); }

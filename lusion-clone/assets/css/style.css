@@ -219,8 +219,17 @@ body.loaded .hero-title .line>span{transform:translateY(0)}
   margin-top:clamp(40px,7vh,80px);align-items:center;position:relative;z-index:1;
 }
 .tablet{background:#0b0b0e;border-radius:30px;padding:14px;box-shadow:0 30px 60px rgba(11,17,51,.22)}
-.tablet-screen{border-radius:18px;overflow:hidden}
+.tablet-screen{border-radius:18px;overflow:hidden;position:relative}
 .tablet-art{width:100%;height:auto}
+.tablet-astro{
+  position:absolute;left:50%;top:47%;width:38%;height:auto;z-index:2;pointer-events:none;
+  filter:drop-shadow(0 12px 26px rgba(0,0,0,.55)) drop-shadow(0 0 30px rgba(140,190,255,.35));
+  animation:astroFloatCentered 6s ease-in-out infinite;
+}
+@keyframes astroFloatCentered{
+  0%,100%{transform:translate(-50%,-50%) translateY(-10px)}
+  50%{transform:translate(-50%,-50%) translateY(10px)}
+}
 .immersive-copy p{font-size:clamp(18px,1.9vw,26px);font-weight:500;line-height:1.45;letter-spacing:-.01em}
 .immersive-copy p+p{margin-top:26px;color:#33363f}
 
@@ -229,8 +238,30 @@ body.loaded .hero-title .line>span{transform:translateY(0)}
 .cta-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#000;color:#fff}
 #ctaCanvas{position:absolute;inset:0;width:100%;height:100%}
 .cta-astro{
-  position:absolute;left:50%;top:50%;width:min(300px,44vw);z-index:3;
+  position:absolute;left:50%;top:50%;width:min(360px,54vw);z-index:3;
   transform:translate(-50%,-50%);will-change:transform,opacity;pointer-events:none;
+}
+.cta-astro .astro-img{
+  width:100%;height:auto;
+  filter:drop-shadow(0 18px 34px rgba(0,0,0,.6)) drop-shadow(0 0 46px rgba(140,190,255,.4));
+  animation:astroFloat 6s ease-in-out infinite;
+}
+@keyframes astroFloat{
+  0%,100%{transform:translateY(-10px)}
+  50%{transform:translateY(10px)}
+}
+.cta-astro2{
+  position:absolute;left:76%;top:76%;width:min(540px,88vw);z-index:4;
+  transform:translate(-50%,-50%);opacity:0;will-change:transform,opacity;pointer-events:none;
+}
+.cta-astro2 img{
+  width:100%;height:auto;
+  filter:drop-shadow(0 18px 34px rgba(0,0,0,.6)) drop-shadow(0 0 46px rgba(140,190,255,.4));
+}
+.cta-astro.waving .astro-img{animation:astroWave 2.1s ease-in-out infinite}
+@keyframes astroWave{
+  0%,100%{transform:translateY(-16px) rotate(-2.5deg)}
+  50%{transform:translateY(16px) rotate(2.5deg)}
 }
 .cta-giant{
   position:absolute;top:50%;left:0;z-index:2;white-space:nowrap;
@@ -238,10 +269,10 @@ body.loaded .hero-title .line>span{transform:translateY(0)}
   transform:translateY(-50%);color:#fff;will-change:transform;pointer-events:none;
   text-shadow:0 0 60px rgba(0,0,0,.35);
 }
-.sticker-world{position:absolute;inset:0;z-index:4;opacity:0;pointer-events:none}
-.sticker{position:absolute;width:clamp(52px,7vw,104px);filter:drop-shadow(0 6px 0 rgba(255,255,255,.9)) drop-shadow(0 10px 22px rgba(0,0,0,.45));animation:bob 3.4s ease-in-out infinite}
+.sticker-world{position:absolute;inset:0;z-index:5;opacity:0;pointer-events:none;will-change:transform,opacity}
+.sticker{position:absolute;width:clamp(52px,7vw,104px);filter:drop-shadow(0 6px 0 rgba(255,255,255,.9)) drop-shadow(0 10px 22px rgba(0,0,0,.45));animation:bob var(--bobDur,3.4s) ease-in-out infinite;will-change:transform}
 .sticker svg{width:100%;height:auto}
-@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(5deg)}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg) scale(var(--pop,0))}50%{transform:translateY(var(--bobAmp,-14px)) rotate(5deg) scale(var(--pop,0))}}
 .st-heart{left:12%;top:16%}
 .st-popsicle{right:14%;top:13%;animation-delay:.4s}
 .st-pizza{left:20%;bottom:15%;animation-delay:.8s}
@@ -253,7 +284,7 @@ body.loaded .hero-title .line>span{transform:translateY(0)}
 .st-crystal{left:33%;bottom:6%;animation-delay:1.7s}
 .st-eye{right:30%;top:7%;animation-delay:1.2s}
 .cta-final{
-  position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
   padding-bottom:15vh;text-align:center;opacity:0;pointer-events:none;padding-left:16px;padding-right:16px;
 }
 .cta-final.show{pointer-events:auto}
@@ -264,12 +295,12 @@ body.loaded .hero-title .line>span{transform:translateY(0)}
 }
 .cta-link:hover{color:var(--cyan)}
 .cta-continue{
-  position:absolute;left:50%;bottom:34px;transform:translateX(-50%);z-index:6;
+  position:absolute;left:50%;bottom:34px;transform:translateX(-50%);z-index:7;
   display:inline-flex;align-items:center;gap:9px;background:#fff;color:#0b0b0e;
   font-size:12px;font-weight:700;letter-spacing:.18em;padding:13px 22px;border-radius:999px;
   transition:opacity .3s;white-space:nowrap;
 }
-.cta-progress{position:absolute;right:0;top:0;width:4px;height:100%;background:#2c2c33;z-index:7}
+.cta-progress{position:absolute;right:0;top:0;width:4px;height:100%;background:#2c2c33;z-index:8}
 .cta-progress span{display:block;width:100%;height:0%;background:#fff}
 
 /* ---------- Footer ---------- */
@@ -356,5 +387,6 @@ body.loaded .hero-title .line>span{transform:translateY(0)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .sticker{animation:none}
+  .cta-astro .astro-img,.tablet-astro{animation:none}
   .split .ch,.reveal,.hero-title .line>span{transition-duration:.01s}
 }
