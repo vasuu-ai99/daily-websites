@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light"/>
+<link rel="icon" href="data:,"/>
+<title>StayNest — Smart Hostel Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand"><h1>Stay<span>Nest</span></h1><p>Smart Hostel Management</p></div>
+    <nav class="nav" id="mainNav" aria-label="Main"></nav>
+    <div class="side-foot">
+      <button class="btn" id="resetBtn">Reset demo data</button>
+      <p style="font-size:11px;color:#8AA5A2;margin:10px 2px 0">Data is saved in this browser.</p>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="topbar"><div><h2 id="pageTitle">Dashboard</h2><p id="pageSub">Everything about your hostel, in one place.</p></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn amber" id="quickAddStudent">+ Add Student</button><button class="btn" id="quickCollect">Collect Fee</button></div></div>
+
+    <section class="view" id="view-dashboard"></section>
+    <section class="view" id="view-students"></section>
+    <section class="view" id="view-rooms"></section>
+    <section class="view" id="view-fees"></section>
+    <section class="view" id="view-mess"></section>
+    <section class="view" id="view-complaints"></section>
+    <section class="view" id="view-visitors"></section>
+    <section class="view" id="view-notices"></section>
+    <section class="view" id="view-reports"></section>
+  </main>
+</div>
+
+<!-- Student modal -->
+<div class="modal-overlay" id="studentModal"><div class="modal"><h3 id="studentModalTitle">Add Student</h3>
+<form id="studentForm">
+<input type="hidden" id="sf-id">
+<div class="field"><label for="sf-name">Full name *</label><input id="sf-name" required placeholder="e.g. Rahul Sharma"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label for="sf-phone">Phone *</label><input id="sf-phone" required placeholder="98XXXXXXXX"></div><div class="field"><label for="sf-guardian">Guardian phone</label><input id="sf-guardian" placeholder="97XXXXXXXX"></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label for="sf-room">Room (vacant beds only)</label><select id="sf-room"></select></div><div class="field"><label for="sf-diet">Diet</label><select id="sf-diet"><option>Veg</option><option>Non-veg</option></select></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px"><div class="field"><label for="sf-join">Join date</label><input type="date" id="sf-join"></div><div class="field"><label for="sf-fee">Monthly fee (₹)</label><input type="number" id="sf-fee" min="0"></div><div class="field"><label for="sf-deposit">Deposit (₹)</label><input type="number" id="sf-deposit" min="0"></div></div>
+<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn amber" type="submit">Save Student</button></div>
+</form></div></div>
+
+<!-- Payment modal -->
+<div class="modal-overlay" id="payModal"><div class="modal"><h3>Collect Fee</h3>
+<form id="payForm">
+<div class="field"><label for="pf-student">Student</label><select id="pf-student" required></select></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label for="pf-month">Month</label><input type="month" id="pf-month" required></div><div class="field"><label for="pf-amount">Amount (₹) *</label><input type="number" id="pf-amount" required min="1"></div></div>
+<div class="field"><label for="pf-method">Payment method</label><select id="pf-method"><option>UPI</option><option>Cash</option><option>Bank</option></select></div>
+<p style="font-size:13px;color:var(--muted)" id="pf-hint"></p>
+<div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn amber" type="submit">Record Payment</button></div>
+</form></div></div>
+
+<!-- Room modal -->
+<div class="modal-overlay" id="roomModal"><div class="modal"><h3 id="roomModalTitle">Room</h3><div id="roomModalBody"></div>
+<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class="btn ghost" data-close>Close</button></div></div></div>
+
+<!-- Generic form modal -->
+<div class="modal-overlay" id="formModal"><div class="modal"><h3 id="formModalTitle">Form</h3><div id="formModalBody"></div></div></div>
+
+<!-- Confirm modal -->
+<div class="modal-overlay" id="confirmModal"><div class="modal" style="max-width:420px"><h3 id="confirmTitle">Are you sure?</h3><p id="confirmText" style="color:var(--muted);font-size:14px;line-height:1.6"></p>
+<div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn ghost" data-close>Cancel</button><button class="btn danger" id="confirmYes">Yes, continue</button></div></div></div>
+
+<aside class="drawer" id="studentDrawer" aria-label="Student details"></aside>
+<div class="toast-wrap" id="toastWrap"></div>
+<a class="credit" href="https://vasux.in" target="_blank" rel="noopener">Crafted by <span>vasux.in</span></a>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
