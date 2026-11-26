@@ -1,4 +1,4 @@
-/* ============ Lusion clone — main.js ============ */
+/* ============ Vasux (Lusion-style) clone — main.js ============ */
 (function () {
   "use strict";
   var $ = function (s, c) { return (c || document).querySelector(s); };
@@ -166,9 +166,9 @@
       '<defs><filter id="fuzz" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="13"/></filter></defs>' +
       '<text x="330" y="440" text-anchor="middle" font-family="Archivo, Arial" font-weight="900" font-size="430" fill="#8b46e8" filter="url(#fuzz)">D</text>' +
       '<text x="330" y="440" text-anchor="middle" font-family="Archivo, Arial" font-weight="900" font-size="430" fill="#9d5cff">D</text>' +
-      '<text x="586" y="212" font-family="Archivo, Arial" font-weight="800" font-size="54" fill="#3ae0e6">Fall 2024</text>' +
-      '<text x="586" y="262" font-family="Archivo, Arial" font-weight="700" font-size="21" letter-spacing="3" fill="#bfeef2">DIGITAL</text>' +
-      '<text x="586" y="292" font-family="Archivo, Arial" font-weight="700" font-size="21" letter-spacing="3" fill="#bfeef2">DESIGN DAYS</text>'),
+      '<text x="572" y="212" font-family="Archivo, Arial" font-weight="800" font-size="46" fill="#3ae0e6">Fall 2024</text>' +
+      '<text x="572" y="262" font-family="Archivo, Arial" font-weight="700" font-size="21" letter-spacing="3" fill="#bfeef2">DIGITAL</text>' +
+      '<text x="572" y="292" font-family="Archivo, Arial" font-weight="700" font-size="21" letter-spacing="3" fill="#bfeef2">DESIGN DAYS</text>'),
     // Choo Choo World — pastel hills + rainbow coaster
     svgWrap('<rect width="800" height="580" fill="#cdeffd"/>' +
       '<path d="M0 380 Q 200 290 420 366 T 800 350 L800 580 L0 580 Z" fill="#9ed99a"/>' +
