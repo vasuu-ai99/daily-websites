@@ -67,10 +67,15 @@ body.fx-on #trailCanvas{opacity:1}
   display:flex;align-items:center;justify-content:space-between;
   padding:20px clamp(16px,3.4vw,44px);
   color:var(--ink);
-  transition:color .35s ease;
+  /* Frosted bar: page content can never print through the logo/buttons.
+     The tint follows the header's existing light/dark colour states. */
+  background:rgba(232,234,241,.85);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);
+  backdrop-filter:blur(14px) saturate(1.4);
+  transition:color .35s ease,background-color .35s ease;
 }
-#siteHeader.inverted{color:#fff}
-#siteHeader.menu-open{color:#fff}
+#siteHeader.inverted{color:#fff;background:rgba(11,11,14,.78)}
+#siteHeader.menu-open{color:#fff;background:rgba(11,11,14,.78)}
 .logo{font-weight:900;font-size:clamp(20px,2vw,27px);letter-spacing:-.02em;line-height:1;min-height:36px;display:flex;align-items:center}
 .header-actions{display:flex;align-items:center;gap:10px}
 .pill{
