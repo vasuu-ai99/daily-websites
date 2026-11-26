@@ -10,15 +10,95 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
-<div class="layout">
+
+<!-- Boot / loading -->
+<div id="bootScreen" class="boot-wrap">
+  <div class="auth-brand"><h1>Stay<span>Nest</span></h1><p>Smart Hostel Management</p></div>
+  <p id="bootMsg" style="color:var(--muted);font-size:14px">Loading…</p>
+</div>
+
+<!-- Auth screen -->
+<div id="authScreen" class="auth-wrap" style="display:none">
+  <div class="auth-card">
+    <div class="auth-brand"><h1>Stay<span>Nest</span></h1><p>Smart Hostel Management</p></div>
+    <div class="tabs" style="margin-bottom:18px">
+      <button type="button" id="tabLogin" class="active">Login</button>
+      <button type="button" id="tabSignup">Sign Up</button>
+    </div>
+    <form id="authForm">
+      <div class="field"><label for="authEmail">Email</label><input type="email" id="authEmail" required autocomplete="email" placeholder="you@example.com"></div>
+      <div class="field"><label for="authPassword">Password</label><input type="password" id="authPassword" required autocomplete="current-password" placeholder="Your password"></div>
+      <div id="authError" class="auth-error" style="display:none"></div>
+      <button class="btn amber" id="authSubmit" type="submit" style="width:100%;justify-content:center">Login</button>
+    </form>
+    <p id="authNote" style="font-size:13px;color:var(--muted);text-align:center;margin:14px 0 0">New to StayNest? Switch to Sign Up to create your hostel account.</p>
+  </div>
+</div>
+
+<!-- Setup wizard -->
+<div id="setupScreen" class="auth-wrap" style="display:none">
+  <div class="auth-card" style="max-width:640px">
+    <div class="auth-brand"><h1>Stay<span>Nest</span></h1><p>Smart Hostel Management</p></div>
+    <h2 style="margin:0 0 4px;font-size:22px">Set up your hostel</h2>
+    <p style="color:var(--muted);font-size:14px;margin:0 0 18px" id="wizStepLabel">Step 1 of 2 — Hostel profile</p>
+
+    <form id="wizStep1">
+      <div class="field"><label for="wz-name">Hostel name *</label><input id="wz-name" required placeholder="e.g. Shree Boys Hostel"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="field"><label for="wz-owner">Owner / Manager name</label><input id="wz-owner" placeholder="Your name"></div>
+        <div class="field"><label for="wz-phone">Phone</label><input id="wz-phone" placeholder="98XXXXXXXX"></div>
+      </div>
+      <div class="field"><label for="wz-address">Address</label><textarea id="wz-address" rows="2" placeholder="Street, area, city"></textarea></div>
+      <div id="wizError1" class="auth-error" style="display:none"></div>
+      <div style="display:flex;justify-content:space-between;gap:8px">
+        <button type="button" class="btn ghost" id="wizLogout1">Logout</button>
+        <button class="btn amber" type="submit">Next — Add Rooms</button>
+      </div>
+    </form>
+
+    <div id="wizStep2" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="field"><label for="wr-floor">Floor</label><select id="wr-floor"><option>Ground</option><option>1st Floor</option><option>2nd Floor</option><option>3rd Floor</option><option>4th Floor</option></select></div>
+        <div class="field"><label for="wr-no">Room number</label><input id="wr-no" placeholder="e.g. 101"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div class="field"><label for="wr-type">Type</label><select id="wr-type"><option>Single</option><option selected>Double</option><option>Triple</option><option>Dormitory</option></select></div>
+        <div class="field"><label for="wr-beds">Beds</label><input type="number" id="wr-beds" min="1" value="2"></div>
+        <div class="field"><label for="wr-rent">Rent / bed (₹)</label><input type="number" id="wr-rent" min="0" value="5000"></div>
+      </div>
+      <button type="button" class="btn" id="wizAddRoom" style="width:100%;justify-content:center">+ Add room</button>
+
+      <div style="border-top:1px dashed var(--line);margin:18px 0;padding-top:14px">
+        <p style="font-size:13px;font-weight:700;margin:0 0 8px">Quick generate a range</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div class="field"><label for="wg-from">From room no.</label><input type="number" id="wg-from" placeholder="101"></div>
+          <div class="field"><label for="wg-to">To room no.</label><input type="number" id="wg-to" placeholder="110"></div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin:0 0 8px">Uses the floor, type, beds and rent selected above.</p>
+        <button type="button" class="btn ghost" id="wizGenRange" style="width:100%;justify-content:center">Generate range</button>
+      </div>
+
+      <div id="wizRoomList" style="margin-top:14px"></div>
+      <div id="wizError2" class="auth-error" style="display:none"></div>
+      <div style="display:flex;justify-content:space-between;gap:8px;margin-top:16px">
+        <button type="button" class="btn ghost" id="wizBack">Back</button>
+        <button type="button" class="btn amber" id="wizFinish">Finish Setup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- App -->
+<div class="layout" id="appLayout" style="display:none">
   <aside class="sidebar">
-    <div class="brand"><h1>Stay<span>Nest</span></h1><p>Smart Hostel Management</p></div>
+    <div class="brand"><h1>Stay<span>Nest</span></h1><p id="sideHostelName">Smart Hostel Management</p></div>
     <nav class="nav" id="mainNav" aria-label="Main"></nav>
     <div class="side-foot">
-      <button class="btn" id="resetBtn">Reset demo data</button>
-      <p style="font-size:11px;color:#8AA5A2;margin:10px 2px 0">Data is saved in this browser.</p>
+      <p id="userEmail" style="font-size:12px;color:#9FB8B5;margin:0 0 8px;word-break:break-all"></p>
+      <button class="btn" id="logoutBtn">Logout</button>
     </div>
   </aside>
   <main class="main">
@@ -43,7 +123,7 @@
 <input type="hidden" id="sf-id">
 <div class="field"><label for="sf-name">Full name *</label><input id="sf-name" required placeholder="e.g. Rahul Sharma"></div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label for="sf-phone">Phone *</label><input id="sf-phone" required placeholder="98XXXXXXXX"></div><div class="field"><label for="sf-guardian">Guardian phone</label><input id="sf-guardian" placeholder="97XXXXXXXX"></div></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label for="sf-room">Room (vacant beds only)</label><select id="sf-room"></select></div><div class="field"><label for="sf-diet">Diet</label><select id="sf-diet"><option>Veg</option><option>Non-veg</option></select></div></div>
+<div class="field"><label for="sf-room">Room (vacant beds only)</label><select id="sf-room"></select></div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px"><div class="field"><label for="sf-join">Join date</label><input type="date" id="sf-join"></div><div class="field"><label for="sf-fee">Monthly fee (₹)</label><input type="number" id="sf-fee" min="0"></div><div class="field"><label for="sf-deposit">Deposit (₹)</label><input type="number" id="sf-deposit" min="0"></div></div>
 <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn amber" type="submit">Save Student</button></div>
 </form></div></div>
@@ -73,7 +153,7 @@
 <div class="toast-wrap" id="toastWrap"></div>
 <a class="credit" href="https://vasux.in" target="_blank" rel="noopener">Crafted by <span>vasux.in</span></a>
 
-<script src="assets/js/data.js"></script>
+<script src="assets/js/config.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
