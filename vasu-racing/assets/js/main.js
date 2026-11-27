@@ -260,51 +260,111 @@ if(counters.length){
   counters.forEach(function(el){ el.textContent = "0" + (el.getAttribute("data-suffix")||""); cio.observe(el); });
 }
 
-/* ---------- Collage counter (native-scroll fallback) ---------- */
+/* ---------- Reveal on scroll (vanilla — always, GSAP never touches these) ---------- */
+var revealEls = document.querySelectorAll("[data-reveal]");
+if(revealEls.length && !reduced && "IntersectionObserver" in window){
+  document.documentElement.classList.add("anim");
+  var rio = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add("in"); rio.unobserve(en.target); }
+    });
+  }, {threshold: 0.08, rootMargin: "0px 0px -6% 0px"});
+  revealEls.forEach(function(el){ rio.observe(el); });
+}
+
+/* ---------- Collage ---------- */
 var vp = document.querySelector(".collage-viewport");
 var cCount = document.querySelector(".collage-count");
 var cBar = document.querySelector(".collage-progress i");
 var cItems = document.querySelectorAll(".collage-item");
+var cTrack = document.querySelector(".collage-track");
+var cSec = document.querySelector(".collage-sec");
+var cPin = document.querySelector(".collage-pin");
+var cImgs = document.querySelectorAll(".collage-item img");
 function setCollage(p){
   if(cCount && cItems.length) cCount.textContent = 1 + Math.round(p * (cItems.length - 1));
   if(cBar) cBar.style.width = (8 + p * 92) + "%";
 }
-if(vp && window.matchMedia("(max-width: 760px)").matches){
+var desktopMQ = window.matchMedia("(min-width: 761px)");
+var collageMode = "native"; /* native swipe/scroll | vanilla pin | gsap pin */
+if(cTrack && cSec && !reduced && desktopMQ.matches){
+  collageMode = (window.gsap && window.ScrollTrigger) ? "gsap" : "vanilla";
+}
+if(collageMode === "native" && vp){
   vp.addEventListener("scroll", function(){
     var max = vp.scrollWidth - vp.clientWidth;
     setCollage(max > 0 ? vp.scrollLeft / max : 0);
   }, {passive:true});
 }
 
-/* ---------- GSAP animations ---------- */
-if(window.gsap && window.ScrollTrigger && !reduced){
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.utils.toArray("[data-reveal]").forEach(function(el){
-    gsap.from(el, {y: 46, opacity: 0, duration: 0.95, ease: "power3.out",
-      scrollTrigger: {trigger: el, start: "top 88%"}});
+/* Vanilla pinned collage: the section gets extra scroll height equal to the
+   track's overflow distance; a sticky pin holds the collage in view while
+   vertical scroll is mapped to sideways travel. */
+var vDist = 0;
+function setupVanillaCollage(){
+  if(collageMode !== "vanilla" || !cPin || !cTrack) return;
+  vDist = Math.max(0, cTrack.scrollWidth - window.innerWidth + 40);
+  cSec.classList.add("v-collage");
+  cSec.style.height = (cPin.offsetHeight + vDist) + "px";
+}
+function updateVanillaCollage(){
+  if(collageMode !== "vanilla" || !cTrack) return;
+  var rect = cSec.getBoundingClientRect();
+  var p = vDist > 0 ? Math.min(1, Math.max(0, -rect.top / vDist)) : 0;
+  cTrack.style.transform = "translateX(" + (-vDist * p).toFixed(1) + "px)";
+  var px = -2.5 + p * 5;
+  cImgs.forEach(function(img){
+    img.style.transform = "scale(1.12) translateX(" + px.toFixed(2) + "%)";
   });
-  /* Hero portrait drift */
-  var hp = document.querySelector(".hero-portrait img");
-  if(hp){
-    gsap.to(hp, {yPercent: 7, ease: "none",
-      scrollTrigger: {trigger: ".hero", start: "top top", end: "bottom top", scrub: true}});
-  }
-  /* Horizontal collage on desktop */
-  var track = document.querySelector(".collage-track");
-  if(track && window.matchMedia("(min-width: 761px)").matches){
-    var dist = function(){ return Math.max(0, track.scrollWidth - window.innerWidth + 40); };
-    gsap.to(track, {x: function(){ return -dist(); }, ease: "none",
-      scrollTrigger: {
-        trigger: ".collage-sec", start: "top top", end: function(){ return "+=" + dist(); },
-        pin: true, scrub: 0.6, invalidateOnRefresh: true,
-        onUpdate: function(self){ setCollage(self.progress); }
-      }});
-    /* gentle per-photo parallax */
-    gsap.utils.toArray(".collage-item img").forEach(function(img, i){
-      gsap.fromTo(img, {scale: 1.12, xPercent: -2.5}, {scale: 1.12, xPercent: 2.5, ease: "none",
-        scrollTrigger: {trigger: ".collage-sec", start: "top top", end: function(){ return "+=" + dist(); }, scrub: true}});
-    });
-  }
+  setCollage(p);
+}
+
+/* ---------- Hero portrait drift (vanilla, scroll-linked) ---------- */
+var heroSec = document.querySelector(".hero");
+var heroImg = document.querySelector(".hero-portrait img");
+function updateHero(){
+  if(!heroImg || !heroSec || reduced) return;
+  var r = heroSec.getBoundingClientRect();
+  if(r.bottom <= 0 || r.top >= window.innerHeight) return;
+  var p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height)));
+  heroImg.style.transform = "translateY(" + (p * heroImg.offsetHeight * 0.07).toFixed(1) + "px)";
+}
+
+/* ---------- Shared rAF scroll loop ---------- */
+if(!reduced){
+  var rafPending = false;
+  var scrollFrame = function(){
+    rafPending = false;
+    if(collageMode === "vanilla") updateVanillaCollage();
+    updateHero();
+  };
+  window.addEventListener("scroll", function(){
+    if(!rafPending){ rafPending = true; requestAnimationFrame(scrollFrame); }
+  }, {passive:true});
+  setupVanillaCollage();
+  scrollFrame();
+  var rszT = null;
+  window.addEventListener("resize", function(){
+    clearTimeout(rszT);
+    rszT = setTimeout(function(){ setupVanillaCollage(); scrollFrame(); }, 150);
+  });
+  window.addEventListener("load", function(){ setupVanillaCollage(); scrollFrame(); });
+}
+
+/* ---------- GSAP progressive enhancement: desktop collage pin/scrub ONLY ---------- */
+if(collageMode === "gsap"){
+  gsap.registerPlugin(ScrollTrigger);
+  var gDist = function(){ return Math.max(0, cTrack.scrollWidth - window.innerWidth + 40); };
+  gsap.to(cTrack, {x: function(){ return -gDist(); }, ease: "none",
+    scrollTrigger: {
+      trigger: ".collage-sec", start: "top top", end: function(){ return "+=" + gDist(); },
+      pin: true, scrub: 0.6, invalidateOnRefresh: true,
+      onUpdate: function(self){ setCollage(self.progress); }
+    }});
+  gsap.utils.toArray(".collage-item img").forEach(function(img){
+    gsap.fromTo(img, {scale: 1.12, xPercent: -2.5}, {scale: 1.12, xPercent: 2.5, ease: "none",
+      scrollTrigger: {trigger: ".collage-sec", start: "top top", end: function(){ return "+=" + gDist(); }, scrub: true}});
+  });
   window.addEventListener("load", function(){ ScrollTrigger.refresh(); });
 }
 })();

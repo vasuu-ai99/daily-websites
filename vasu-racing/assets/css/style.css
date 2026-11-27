@@ -1,4 +1,15 @@
 /* ============ VASU RACING — shared stylesheet ============ */
+/* ---------- Self-hosted fonts (no CDN) ---------- */
+@font-face{font-family:'Anton';src:url('../fonts/anton-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Archivo';src:url('../fonts/archivo-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Archivo';src:url('../fonts/archivo-500.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Archivo';src:url('../fonts/archivo-600.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Archivo';src:url('../fonts/archivo-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Archivo';src:url('../fonts/archivo-800.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:'Caveat';src:url('../fonts/caveat-600.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Caveat';src:url('../fonts/caveat-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../fonts/playfair-display-italic-500.woff2') format('woff2');font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../fonts/playfair-display-italic-600.woff2') format('woff2');font-weight:600;font-style:italic;font-display:swap}
 :root{
   --lime:#C8FF00;
   --lime-dim:#a8d900;
@@ -523,8 +534,19 @@ footer.site{background:#0B0D08;color:var(--sage);position:relative;overflow:hidd
   .cal-row .dates{display:none}
 }
 
-/* ---------- Reveal defaults (JS animates in) ---------- */
-[data-reveal]{will-change:transform,opacity}
+/* ---------- Reveal (vanilla IntersectionObserver) ----------
+   Hidden state applies ONLY when JS has added .anim to <html>,
+   so content is fully visible if JS never runs. */
+html.anim [data-reveal]{opacity:0;transform:translateY(46px);transition:opacity .9s ease,transform .95s cubic-bezier(.22,.61,.21,1);will-change:transform,opacity}
+html.anim [data-reveal].in{opacity:1;transform:translateY(0)}
+
+/* ---------- Vanilla pinned collage (desktop, no GSAP) ---------- */
+.collage-sec.v-collage{overflow:visible}
+.collage-sec.v-collage .collage-pin{position:sticky;top:0}
+@media(min-width:761px) and (prefers-reduced-motion:reduce){
+  .collage-viewport{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .collage-viewport::-webkit-scrollbar{display:none}
+}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001s !important;transition-duration:.001s !important}
   html{scroll-behavior:auto}
