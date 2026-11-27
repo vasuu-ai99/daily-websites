@@ -504,7 +504,7 @@ footer.site{background:#0B0D08;color:var(--sage);position:relative;overflow:hidd
 .cal-hero .label{color:var(--lime)}
 .cal-hero h1{font-size:clamp(2.8rem,9vw,7.5rem);color:#fff;margin-top:.6rem}
 .cal-hero h1 .serif{color:var(--lime)}
-.cal-hero .big-sig{font-family:var(--font-hand);color:var(--lime);font-size:clamp(4.5rem,13vw,10rem);line-height:.75;transform:rotate(-4deg);margin-top:1rem}
+.cal-hero .big-sig{font-family:var(--font-hand);color:var(--lime);font-size:clamp(4.5rem,13vw,10rem);line-height:1.05;transform:rotate(-4deg);margin-top:1rem;margin-bottom:.45em;padding-bottom:.12em}
 .cal-hero .cal-tags{display:flex;flex-wrap:wrap;gap:.8rem 2.2rem;margin-top:1.8rem}
 .cal-hero .cal-tags span{font-size:.74rem;font-weight:800;letter-spacing:.26em;text-transform:uppercase;border:1px solid var(--line-light);padding:.55rem 1rem;border-radius:99px}
 .cal-hero .cal-tags span b{color:var(--lime)}
