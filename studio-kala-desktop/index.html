@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Kala - a working desktop</title>
+<meta name="description" content="Studio Kala is a design studio in Jaipur and Mumbai. This portfolio works like a desktop. Open Finder to see the work.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23E0311C'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='36' font-weight='bold' fill='%23F9F8F6' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div id="boot" role="status" aria-label="Loading Studio Kala">
+  <div class="boot-mark">KALA</div>
+  <div class="boot-sub">STUDIO KALA &middot; JAIPUR + MUMBAI</div>
+  <div class="boot-bar"><span id="bootFill"></span></div>
+</div>
+
+<div id="desktop" aria-hidden="true">
+  <div id="wallpaper" aria-hidden="true"></div>
+
+  <header id="menubar">
+    <div class="mb-left">
+      <button id="logoBtn" class="mb-logo" aria-label="Studio Kala menu" title="Studio Kala">K</button>
+      <span id="activeApp" class="mb-app">Finder</span>
+      <nav id="mbMenus" aria-label="Menus">
+        <button class="mb-menu" data-menu="file">File</button>
+        <button class="mb-menu" data-menu="edit">Edit</button>
+        <button class="mb-menu" data-menu="go">Go</button>
+        <button class="mb-menu" data-menu="window">Window</button>
+        <button class="mb-menu" data-menu="help">Help</button>
+      </nav>
+    </div>
+    <div class="mb-right">
+      <button id="wifiBtn" class="mb-icon" title="Wi-Fi" aria-label="Wi-Fi status">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 9a15 15 0 0 1 19 0"/><path d="M5.5 12.5a10 10 0 0 1 13 0"/><path d="M8.6 16a5 5 0 0 1 6.8 0"/><circle cx="12" cy="19" r="1.4" fill="currentColor" stroke="none"/></svg>
+      </button>
+      <button id="muteBtn" class="mb-icon" title="Mute" aria-label="Mute sound">
+        <svg id="soundIcon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6.5 9H3v6h3.5L11 19V5z" fill="currentColor" stroke="none"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.2 6a9 9 0 0 1 0 12"/></svg>
+      </button>
+      <button id="spotBtn" class="mb-icon" title="Spotlight search" aria-label="Spotlight search">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+      </button>
+      <button id="ccBtn" class="mb-icon" title="Control Center" aria-label="Control Center">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="4" rx="2" fill="currentColor" stroke="none"/><rect x="3" y="10" width="12" height="4" rx="2" fill="currentColor" stroke="none"/><rect x="3" y="16" width="16" height="4" rx="2" fill="currentColor" stroke="none"/></svg>
+      </button>
+      <span id="clock" class="mb-clock">--:--</span>
+    </div>
+    <div id="menudrop" class="menudrop" hidden></div>
+  </header>
+
+  <aside id="widgets" aria-label="Desktop widgets">
+    <section class="widget" id="wClocks" data-widget="clocks" tabindex="0">
+      <div class="w-eyebrow">THE STUDIO RUNS ON TWO CLOCKS</div>
+      <div class="w-clockrow"><span>JAIPUR</span><strong id="clkJaipur">--:--</strong></div>
+      <div class="w-clockrow"><span>MUMBAI</span><strong id="clkMumbai">--:--</strong></div>
+    </section>
+    <section class="widget" id="wDate" data-widget="call" tabindex="0" role="button">
+      <div class="w-eyebrow">BOOK A CALL</div>
+      <div class="w-big" id="todayLine">--</div>
+      <div class="w-sub">Book a 30 min call</div>
+    </section>
+    <section class="widget" id="wJournal" data-widget="journal" tabindex="0" role="button">
+      <div class="w-eyebrow">JOURNAL &middot; LATEST</div>
+      <div class="w-title">Why we build portfolios that work like desktops</div>
+      <div class="w-sub">2026-11-20 &middot; 4 min</div>
+    </section>
+    <section class="widget" id="wCount" data-widget="finder" tabindex="0" role="button">
+      <div class="w-eyebrow">PORTFOLIO</div>
+      <div class="w-big">9 Projects</div>
+      <div class="w-sub">in Finder</div>
+    </section>
+    <section class="widget" id="wFm" data-widget="fm" tabindex="0">
+      <div class="w-eyebrow">STUDIO FM</div>
+      <div class="w-title">Rainy Window</div>
+      <div class="w-fmrow">
+        <button id="fmPlay" class="w-btn">Play</button>
+        <button id="fmNext" class="w-btn">Next</button>
+        <span id="fmState" class="w-sub">Paused</span>
+      </div>
+    </section>
+  </aside>
+
+  <div id="deskicons" aria-label="Desktop files">
+    <button class="dicon" data-open="finder" data-kind="folder">
+      <span class="dicon-img folder" aria-hidden="true"><svg viewBox="0 0 48 48" width="46" height="46"><path d="M4 12a4 4 0 0 1 4-4h8l4 5h16a4 4 0 0 1 4 4v17a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V12z" fill="#E8B93C" stroke="#141413" stroke-width="1.5"/></svg></span>
+      <span class="dicon-label">Projects</span>
+    </button>
+    <button class="dicon" data-open="journal" data-kind="doc">
+      <span class="dicon-img doc" aria-hidden="true"><svg viewBox="0 0 48 48" width="46" height="46"><rect x="10" y="4" width="28" height="40" rx="2" fill="#F9F8F6" stroke="#141413" stroke-width="1.5"/><path d="M16 14h16M16 20h16M16 26h10" stroke="#141413" stroke-width="2" stroke-linecap="round"/></svg></span>
+      <span class="dicon-label">Journal</span>
+    </button>
+    <button class="dicon" data-open="readme" data-kind="doc">
+      <span class="dicon-img doc" aria-hidden="true"><svg viewBox="0 0 48 48" width="46" height="46"><rect x="10" y="4" width="28" height="40" rx="2" fill="#F9F8F6" stroke="#141413" stroke-width="1.5"/><path d="M16 14h16M16 20h16M16 26h10" stroke="#141413" stroke-width="2" stroke-linecap="round"/></svg></span>
+      <span class="dicon-label">README.txt</span>
+    </button>
+  </div>
+
+  <main id="windows" aria-label="Open windows"></main>
+
+  <nav id="dock" aria-label="Dock"></nav>
+
+  <div id="springboard" aria-label="Apps">
+    <div class="sb-title">Studio Kala</div>
+    <div class="sb-grid" id="sbGrid"></div>
+    <div class="sb-hint">Tap an app to open it. Everything here works.</div>
+  </div>
+
+  <div id="spotlight" class="overlay" hidden>
+    <div class="spot-panel">
+      <div class="spot-row">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+        <input id="spotInput" type="text" placeholder="Spotlight Search" autocomplete="off" aria-label="Spotlight Search">
+        <button id="spotClose" class="spot-x" aria-label="Close search">Esc</button>
+      </div>
+      <div id="spotResults" class="spot-results"></div>
+    </div>
+  </div>
+
+  <div id="controlcenter" class="overlay" hidden>
+    <div class="cc-panel">
+      <div class="cc-row">
+        <button id="ccWifi" class="cc-toggle on" aria-pressed="true">
+          <span class="cc-ticon">Wi-Fi</span><span class="cc-tstate">On</span>
+        </button>
+        <button id="ccDark" class="cc-toggle" aria-pressed="false">
+          <span class="cc-ticon">Dark Mode</span><span class="cc-tstate">Off</span>
+        </button>
+      </div>
+      <label class="cc-slider"><span>Display</span><input id="ccBright" type="range" min="60" max="100" value="100" aria-label="Display brightness"></label>
+      <label class="cc-slider"><span>Sound</span><input id="ccVol" type="range" min="0" max="100" value="70" aria-label="Sound volume"></label>
+      <div class="cc-now">
+        <div>
+          <div class="cc-np-eyebrow">NOW PLAYING</div>
+          <div id="ccTrack" class="cc-np-title">Nothing playing</div>
+        </div>
+        <div class="cc-np-btns">
+          <button id="ccPlay" class="w-btn">Play</button>
+          <button id="ccNext" class="w-btn">Next</button>
+        </div>
+      </div>
+      <p class="cc-note">This desktop runs on your device. No tracking, no cookies, no analytics.</p>
+    </div>
+  </div>
+
+  <div id="shutdown" class="overlay" hidden>
+    <div class="shut-panel">
+      <div class="boot-mark">KALA</div>
+      <p>Studio Kala is shut down.<br>It is now safe to close this tab.</p>
+      <button id="wakeBtn" class="w-btn big">Wake up</button>
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <a id="vasuxBadge" href="https://vasux.in" target="_blank" rel="noopener">Crafted by vasux.in</a>
+</div>
+
+<noscript>
+<style>
+  #boot, #desktop { display: none !important; }
+  .noscript-view { display: block !important; }
+</style>
+</noscript>
+<div class="noscript-view" id="noscriptView">
+  <h1>Studio Kala</h1>
+  <p>A design studio in Jaipur and Mumbai. We design and build websites, online stores and custom platforms for Indian brands. The full experience works like a desktop and needs JavaScript. This page lists the same content in plain form.</p>
+  <h2>Work</h2>
+  <ul>
+    <li>Marwar and Co. - Jewellery, 2026. Online sales up 3.1x in six months.</li>
+    <li>Chaisutra - Hospitality, 2025. Table bookings doubled after the new site.</li>
+    <li>Kapaas - E-commerce, 2026. Wholesale orders now come in through the site.</li>
+    <li>PaisaPe - Fintech, 2025. Signups up 42% in the first quarter.</li>
+    <li>Haveli House - Hospitality, 2026. Direct bookings beat aggregators for the first time.</li>
+    <li>Mirchi and Co. - E-commerce, 2024. Subscription boxes sell out every month.</li>
+    <li>Lakdi Studio - Furniture, 2025. Custom orders up 2.4x.</li>
+    <li>Raag Records - Music, 2026. Streams up 58% after the new release pages.</li>
+    <li>Adda Works - Workspace, 2025. Desks booked out two months ahead.</li>
+  </ul>
+  <h2>Pricing</h2>
+  <ul>
+    <li>Discovery: Rs. 50,000</li>
+    <li>Marketing website: from Rs. 1,00,000</li>
+    <li>Shopify storefront: Rs. 1,25,000</li>
+    <li>Headless Shopify: Rs. 1,85,000</li>
+    <li>Custom platform: Rs. 2,40,000</li>
+    <li>Ongoing care: Rs. 18,000 per month</li>
+  </ul>
+  <p>Final price follows the real scope.</p>
+  <h2>Contact</h2>
+  <p>Write to studio@studiokala.in. We reply within one business day. Jaipur and Mumbai, India.</p>
+  <p>Copyright 2026 Vasux.in. Crafted by vasux.in.</p>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
